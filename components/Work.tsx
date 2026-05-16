@@ -13,6 +13,7 @@ type Project = {
   stats: { label: string; value: string }[];
   bullets: string[];
   tech: string[];
+  featured?: boolean;
 };
 
 const PROJECTS: Project[] = [
@@ -21,7 +22,7 @@ const PROJECTS: Project[] = [
     status: "live",
     emoji: "🎵",
     title: "Seoul.fm",
-    tagline: "K-pop streaming platform — 300k+ community, 6 continents, 17 years.",
+    tagline: "17 years. 6 continents. $44/month infrastructure. The platform that never sleeps.",
     description:
       "K-pop streaming platform with 300k+ community across 6 continents. 17 years running. Android app live on the Play Store. Broadcast-grade audio via Omnia + StereoTool + BS2B binaural.",
     tags: ["300k Community", "Android App", "17 Years"],
@@ -41,13 +42,14 @@ const PROJECTS: Project[] = [
       "Serving 6 continents on $44/month infrastructure",
     ],
     tech: ["React", "Flutter", "Node.js", "PHP", "Python", "PostgreSQL", "Redis", "FFmpeg", "HLS/CMAF", "Proxmox", "BunnyCDN"],
+    featured: true,
   },
   {
     id: "messagebox",
     status: "new",
     emoji: "📬",
     title: "MessageBox",
-    tagline: "Autonomous comm hub — iMessage, SMS, Gmail unified with AI drafting.",
+    tagline: "Three inboxes. One interface. Claude drafts. OpenClaw decides what to send autonomously.",
     description:
       "Autonomous communication hub aggregating iMessage, SMS, and Gmail into one dark-mode interface. Claude drafts replies, OpenClaw sends autonomously based on confidence thresholds.",
     tags: ["Agentic", "Next.js 15", "OpenClaw"],
@@ -72,7 +74,7 @@ const PROJECTS: Project[] = [
     status: "new",
     emoji: "💎",
     title: "AI CX System",
-    tagline: "RAG email triage for luxury retail. Built in a weekend. Under $0.10 CAD/reply.",
+    tagline: "A luxury retailer's entire CX operation — email triage, RAG chat, ops dashboard. Built in a weekend. A dev agency would quote $15k–$50k.",
     description:
       "Full AI-powered customer experience system for a luxury retail studio in Toronto. Gmail OAuth trigger → n8n orchestration → Claude Opus generation in the client's exact voice.",
     tags: ["RAG", "n8n", "Supabase"],
@@ -96,7 +98,7 @@ const PROJECTS: Project[] = [
     status: "new",
     emoji: "🏠",
     title: "ListingLaunch",
-    tagline: "AI listing kit generator for real estate. Address in → HTML email, PDF, Reels out.",
+    tagline: "Property address in. HTML email + PDF flyer + social captions + Reels video out. Voice-trained on the agent's own content.",
     description:
       "AI listing package generator built for a Texas real estate firm. Enter a property's address, price, and highlights — get a complete marketing kit in seconds.",
     tags: ["Remotion", "Claude API", "React"],
@@ -120,7 +122,7 @@ const PROJECTS: Project[] = [
     status: "new",
     emoji: "📥",
     title: "InboxAI",
-    tagline: "Gmail triage for real estate. Hot/warm/cold classification, drafts queued for review.",
+    tagline: "Every email read, classified hot/warm/cold, and drafted — before the agent even opens Gmail.",
     description:
       "Gmail triage and response system for a commercial real estate operation. Reads every incoming email, classifies it by urgency and type, drafts a reply in the agent's voice.",
     tags: ["Gmail OAuth", "Claude", "n8n"],
@@ -143,7 +145,7 @@ const PROJECTS: Project[] = [
     status: "live",
     emoji: "📺",
     title: "TV Karaoke System",
-    tagline: "First K-pop platform with Chromecast/AirPlay + synced lyrics. Zero competitors.",
+    tagline: "The only K-pop platform with TV lyrics sync via Chromecast and AirPlay. 4 design iterations in 4 hours. Zero competitors.",
     description:
       "First and only K-pop streaming platform with Chromecast/AirPlay support featuring synced romanized lyrics on TV. Built custom receiver with 4 complete design iterations in 4 hours.",
     tags: ["ONLY In Market", "4hrs Build"],
@@ -166,7 +168,7 @@ const PROJECTS: Project[] = [
     status: "live",
     emoji: "⚡",
     title: "Dual API Architecture",
-    tagline: "78 endpoints, two APIs, one weekend. Node.js v2 + PHP v1, Redis pub/sub, SSE.",
+    tagline: "78 production endpoints across two architectures — built start to finish in one weekend.",
     description:
       "Production REST API with dual architecture. Node.js v2 (42 private endpoints) for internal use + PHP v1 (36 public endpoints) with Swagger docs. Built complete system in one weekend.",
     tags: ["78 Endpoints", "Weekend Build"],
@@ -189,7 +191,7 @@ const PROJECTS: Project[] = [
     status: "live",
     emoji: "🎧",
     title: "SongIngest",
-    tagline: "MP3 broadcast pipeline. -16 LUFS normalization, AI Hangul romanization, 6,400 songs.",
+    tagline: "6,400-song broadcast library, kept clean automatically. AI romanization, -16 LUFS normalization, Spotify metadata.",
     description:
       "MP3 preparation pipeline for broadcast. Turns messy MP3s into clean, radio-safe files with proper metadata, loudness normalization, and AI-powered romanization.",
     tags: ["Broadcast", "AI Metadata"],
@@ -212,7 +214,7 @@ const PROJECTS: Project[] = [
     status: "live",
     emoji: "🏡",
     title: "Integrated Home Infrastructure",
-    tagline: "18-camera AI security, 6-zone audio, VoIP, weather station, dual-WAN — all via Home Assistant.",
+    tagline: "18 cameras, 6 audio zones, VoIP, weather station, dual-WAN failover — all wired and installed from scratch.",
     description:
       "Complete smart home ecosystem coordinating security, audio, environment, and telecom via Home Assistant. Self-installed electrical and Cat6 cabling.",
     tags: ["IoT", "AI Vision"],
@@ -329,6 +331,92 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
   );
 }
 
+function FeaturedCard({ project, onClick }: { project: Project; onClick: () => void }) {
+  return (
+    <div
+      className="glass-card rounded-xl p-7 cursor-pointer group relative overflow-hidden col-span-full"
+      onClick={onClick}
+      style={{
+        border: "1px solid rgba(0,245,255,0.15)",
+        background: "rgba(10,10,20,0.8)",
+      }}
+    >
+      {/* Hover glow */}
+      <div
+        className="absolute inset-0 opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-300 rounded-xl"
+        style={{
+          background: "radial-gradient(ellipse at top left, rgba(0,245,255,0.06) 0%, transparent 60%)",
+        }}
+      />
+      {/* Featured accent line */}
+      <div
+        className="absolute top-0 left-0 right-0 h-[2px] rounded-t-xl"
+        style={{ background: "linear-gradient(90deg, #00f5ff, #7c3aed)" }}
+      />
+
+      <div className="flex flex-col md:flex-row md:items-start gap-6">
+        {/* Left */}
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-3 mb-3">
+            <span className="text-4xl">{project.emoji}</span>
+            <div>
+              <div className="flex items-center gap-2 mb-1">
+                <h3 className="font-mono font-bold text-2xl text-white">{project.title}</h3>
+                <span className="badge-live">live</span>
+                <span
+                  className="font-mono text-xs px-2 py-0.5 rounded"
+                  style={{
+                    background: "rgba(0,245,255,0.08)",
+                    border: "1px solid rgba(0,245,255,0.2)",
+                    color: "rgba(0,245,255,0.7)",
+                  }}
+                >
+                  Flagship
+                </span>
+              </div>
+              <p className="text-sm leading-relaxed" style={{ color: "rgba(240,240,248,0.5)" }}>
+                {project.tagline}
+              </p>
+            </div>
+          </div>
+
+          <div className="flex flex-wrap gap-1.5 mt-4">
+            {project.tags.map((t) => (
+              <span key={t} className="tech-badge" style={{ fontSize: "10px" }}>{t}</span>
+            ))}
+          </div>
+        </div>
+
+        {/* Right — inline stats */}
+        <div className="flex gap-6 md:gap-8 flex-shrink-0">
+          {[
+            { value: "17yr", label: "Running" },
+            { value: "300k+", label: "Members" },
+            { value: "91k", label: "Plays" },
+          ].map((s) => (
+            <div key={s.label} className="text-center">
+              <div className="font-mono font-bold text-xl" style={{ color: "#00f5ff" }}>
+                {s.value}
+              </div>
+              <div className="font-mono text-xs mt-0.5" style={{ color: "rgba(240,240,248,0.35)" }}>
+                {s.label}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div
+        className="font-mono text-xs flex items-center gap-1 mt-5 transition-all duration-200 group-hover:gap-2"
+        style={{ color: "rgba(0,245,255,0.5)" }}
+      >
+        View Details
+        <span style={{ color: "#00f5ff" }}>→</span>
+      </div>
+    </div>
+  );
+}
+
 function ProjectCard({ project, onClick }: { project: Project; onClick: () => void }) {
   return (
     <div
@@ -377,6 +465,9 @@ function ProjectCard({ project, onClick }: { project: Project; onClick: () => vo
 export default function Work() {
   const [activeProject, setActiveProject] = useState<Project | null>(null);
 
+  const featured = PROJECTS.filter((p) => p.featured);
+  const rest = PROJECTS.filter((p) => !p.featured);
+
   return (
     <section id="work" className="py-24">
       <div className="max-w-7xl mx-auto px-6">
@@ -387,14 +478,16 @@ export default function Work() {
             Systems that deliver.
           </h2>
           <p className="max-w-xl text-sm leading-relaxed" style={{ color: "rgba(240,240,248,0.45)" }}>
-            From streaming platforms to AI pipelines, every project is built for production
-            reliability and radical speed.
+            Every project below runs in production. Real infrastructure, real users, real uptime — not portfolio demos.
           </p>
         </div>
 
         {/* Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {PROJECTS.map((p) => (
+          {featured.map((p) => (
+            <FeaturedCard key={p.id} project={p} onClick={() => setActiveProject(p)} />
+          ))}
+          {rest.map((p) => (
             <ProjectCard key={p.id} project={p} onClick={() => setActiveProject(p)} />
           ))}
         </div>

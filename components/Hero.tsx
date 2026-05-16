@@ -1,26 +1,71 @@
 "use client";
 import { useEffect, useState } from "react";
 
-const TERMINAL_LINES = [
-  { prefix: "$", text: " ai-dev --mode=autonomous", delay: 0 },
-  { prefix: "✓", text: " AI pipeline initialized", delay: 600, color: "#10b981" },
-  { prefix: "✓", text: " 78 endpoints online", delay: 1100, color: "#10b981" },
-  { prefix: "✓", text: " Seoul.fm streaming 6 continents", delay: 1600, color: "#10b981" },
-  { prefix: "✓", text: " Production deploy: 1.3s", delay: 2100, color: "#10b981" },
-  { prefix: ">", text: " Ready. Systems running.", delay: 2700, color: "#00f5ff" },
+// Status dashboard rows: [delay in ms, content type]
+type DashRow =
+  | { type: "cmd"; delay: number }
+  | { type: "blank"; delay: number }
+  | { type: "header"; delay: number }
+  | { type: "row"; delay: number; name: string; status: string; uptime: string }
+  | { type: "footer"; delay: number };
+
+const DASH_ROWS: DashRow[] = [
+  { type: "cmd",    delay: 0 },
+  { type: "blank",  delay: 300 },
+  { type: "header", delay: 700 },
+  { type: "row",    delay: 1000, name: "Seoul.fm",        status: "LIVE",    uptime: "17yr · 6 continents" },
+  { type: "row",    delay: 1300, name: "API v2 (42 eps)", status: "ONLINE",  uptime: "<4ms avg response" },
+  { type: "row",    delay: 1600, name: "AI Pipeline",     status: "RUNNING", uptime: "24/7 autonomous" },
+  { type: "row",    delay: 2200, name: "Community",       status: "ACTIVE",  uptime: "300k+ members" },
+  { type: "blank",  delay: 2600 },
+  { type: "footer", delay: 2900 },
 ];
 
-function TerminalWindow() {
-  const [visibleLines, setVisibleLines] = useState<number[]>([]);
+function pad(s: string, n: number) {
+  return s.length >= n ? s : s + " ".repeat(n - s.length);
+}
+
+function AntipoloClock() {
+  const [time, setTime] = useState("");
 
   useEffect(() => {
-    TERMINAL_LINES.forEach((line, i) => {
-      setTimeout(() => setVisibleLines((prev) => [...prev, i]), line.delay + 800);
-    });
+    const tick = () => {
+      const now = new Date();
+      // UTC+8
+      const utc8 = new Date(now.getTime() + 8 * 60 * 60 * 1000);
+      const h = utc8.getUTCHours().toString().padStart(2, "0");
+      const m = utc8.getUTCMinutes().toString().padStart(2, "0");
+      setTime(`${h}:${m} PHT · UTC+8`);
+    };
+    tick();
+    const id = setInterval(tick, 1000);
+    return () => clearInterval(id);
   }, []);
 
   return (
-    <div className="terminal w-full max-w-md">
+    <div
+      className="mt-3 flex items-center gap-2"
+      style={{ fontFamily: "var(--font-mono)", fontSize: "11px", color: "rgba(240,240,248,0.35)" }}
+    >
+      <span style={{ color: "rgba(0,245,255,0.4)" }}>◷</span>
+      <span>Current time in Antipolo — {time}</span>
+    </div>
+  );
+}
+
+function TerminalWindow() {
+  const [visible, setVisible] = useState<number[]>([]);
+
+  useEffect(() => {
+    DASH_ROWS.forEach((row, i) => {
+      setTimeout(() => setVisible((prev) => [...prev, i]), row.delay + 600);
+    });
+  }, []);
+
+  const isVisible = (i: number) => visible.includes(i);
+
+  return (
+    <div className="terminal w-full max-w-lg">
       <div className="terminal-header">
         <span className="terminal-dot" style={{ background: "#ff5f56" }} />
         <span className="terminal-dot" style={{ background: "#ffbd2e" }} />
@@ -32,58 +77,71 @@ function TerminalWindow() {
           ~/ramil — zsh
         </span>
       </div>
-      <div className="p-5 space-y-2 min-h-[180px]">
-        {TERMINAL_LINES.map((line, i) =>
-          visibleLines.includes(i) ? (
-            <div
-              key={i}
-              className="flex gap-2 text-sm"
-              style={{
-                fontFamily: "var(--font-mono)",
-                animation: "fadeIn 0.3s ease",
-              }}
-            >
-              <span style={{ color: line.color || "rgba(240,240,248,0.4)" }}>
-                {line.prefix}
-              </span>
-              <span style={{ color: line.color || "rgba(240,240,248,0.8)" }}>
-                {line.text}
-              </span>
-              {i === visibleLines[visibleLines.length - 1] &&
-                i === TERMINAL_LINES.length - 1 && (
-                  <span
-                    className="inline-block w-2 h-4 ml-0.5"
-                    style={{
-                      background: "#00f5ff",
-                      animation: "cursor-blink 1s step-end infinite",
-                    }}
-                  />
-                )}
-            </div>
-          ) : null
-        )}
-        {visibleLines.length < TERMINAL_LINES.length && (
-          <div
-            className="flex gap-2 text-sm"
-            style={{ fontFamily: "var(--font-mono)" }}
-          >
+      <div className="p-5 min-h-[220px]" style={{ fontFamily: "var(--font-mono)", fontSize: "13px" }}>
+        {DASH_ROWS.map((row, i) => {
+          if (!isVisible(i)) return null;
+          const style: React.CSSProperties = {
+            animation: "fadeIn 0.3s ease",
+            whiteSpace: "pre",
+          };
+          if (row.type === "cmd") {
+            return (
+              <div key={i} style={style}>
+                <span style={{ color: "rgba(0,245,255,0.6)" }}>$</span>
+                <span style={{ color: "rgba(240,240,248,0.8)" }}> ramil.dev --status</span>
+              </div>
+            );
+          }
+          if (row.type === "blank") {
+            return <div key={i} style={{ height: "0.6em" }} />;
+          }
+          if (row.type === "header") {
+            return (
+              <div key={i} style={{ ...style, color: "rgba(240,240,248,0.35)", fontSize: "11px", letterSpacing: "0.08em" }}>
+                {pad("SYSTEM", 18)}{pad("STATUS", 12)}UPTIME
+              </div>
+            );
+          }
+          if (row.type === "row") {
+            return (
+              <div key={i} style={{ ...style, color: "rgba(240,240,248,0.75)", fontSize: "12px" }}>
+                {pad(row.name, 18)}
+                <span style={{ color: "#10b981" }}>● {pad(row.status, 10)}</span>
+                <span style={{ color: "rgba(240,240,248,0.45)" }}>{row.uptime}</span>
+              </div>
+            );
+          }
+          if (row.type === "footer") {
+            return (
+              <div key={i} style={{ ...style, color: "#00f5ff", fontSize: "12px" }}>
+                → All systems operational.
+                <span
+                  className="inline-block w-2 h-3.5 ml-1 align-middle"
+                  style={{ background: "#00f5ff", animation: "cursor-blink 1s step-end infinite" }}
+                />
+              </div>
+            );
+          }
+          return null;
+        })}
+        {visible.length < DASH_ROWS.length && (
+          <div style={{ display: "flex", gap: "8px", marginTop: "2px" }}>
             <span style={{ color: "rgba(240,240,248,0.4)" }}>$</span>
             <span
               className="inline-block w-2 h-4"
-              style={{
-                background: "#00f5ff",
-                animation: "cursor-blink 1s step-end infinite",
-              }}
+              style={{ background: "#00f5ff", animation: "cursor-blink 1s step-end infinite" }}
             />
           </div>
         )}
       </div>
+      <AntipoloClock />
+      <div style={{ height: "12px" }} />
     </div>
   );
 }
 
 function HeroHeadline() {
-  const words = ["I build systems", "that run", "themselves."];
+  const words = ["I build systems", "that know what", "to do next."];
   const [visible, setVisible] = useState(0);
 
   useEffect(() => {
@@ -147,10 +205,7 @@ export default function Hero() {
           <div className="space-y-8">
             {/* Label */}
             <div className="flex items-center gap-3">
-              <span
-                className="w-8 h-px"
-                style={{ background: "#00f5ff" }}
-              />
+              <span className="w-8 h-px" style={{ background: "#00f5ff" }} />
               <span className="section-label">AI-native developer</span>
             </div>
 
@@ -160,9 +215,9 @@ export default function Hero() {
               className="text-base leading-relaxed max-w-md"
               style={{ color: "rgba(240,240,248,0.55)" }}
             >
-              Shipping production features in hours, not months. 17 years of
-              building autonomous systems — from streaming platforms serving 6
-              continents to AI pipelines that never sleep.
+              Most developers build features. I build systems that know what to do next.
+              17 years of production instincts, now multiplied by AI — I ship in days what
+              agencies quote in months.
             </p>
 
             <div className="flex flex-wrap gap-4">
@@ -182,16 +237,10 @@ export default function Hero() {
                 ["78", "Endpoints"],
               ].map(([num, label]) => (
                 <div key={label}>
-                  <div
-                    className="font-mono font-bold text-xl"
-                    style={{ color: "#00f5ff" }}
-                  >
+                  <div className="font-mono font-bold text-xl" style={{ color: "#00f5ff" }}>
                     {num}
                   </div>
-                  <div
-                    className="font-mono text-xs mt-0.5"
-                    style={{ color: "rgba(240,240,248,0.35)" }}
-                  >
+                  <div className="font-mono text-xs mt-0.5" style={{ color: "rgba(240,240,248,0.35)" }}>
                     {label}
                   </div>
                 </div>
@@ -239,8 +288,7 @@ export default function Hero() {
         <div
           className="w-px h-8"
           style={{
-            background:
-              "linear-gradient(to bottom, rgba(0,245,255,0.4), transparent)",
+            background: "linear-gradient(to bottom, rgba(0,245,255,0.4), transparent)",
             animation: "pulse-glow 2s ease-in-out infinite",
           }}
         />

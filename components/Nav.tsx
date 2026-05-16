@@ -2,15 +2,16 @@
 import { useEffect, useState } from "react";
 
 const links = [
-  { label: "Work", href: "#work" },
-  { label: "Process", href: "#process" },
-  { label: "Skills", href: "#skills" },
-  { label: "Contact", href: "#contact" },
+  { label: "Work", href: "#work", id: "work" },
+  { label: "Process", href: "#process", id: "process" },
+  { label: "Skills", href: "#skills", id: "skills" },
+  { label: "Contact", href: "#contact", id: "contact" },
 ];
 
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState<string>("");
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 30);
@@ -18,13 +19,33 @@ export default function Nav() {
     return () => window.removeEventListener("scroll", handler);
   }, []);
 
+  useEffect(() => {
+    const sectionIds = links.map((l) => l.id);
+    const observers: IntersectionObserver[] = [];
+
+    sectionIds.forEach((id) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            setActiveSection(id);
+          }
+        },
+        { threshold: 0.3, rootMargin: "-64px 0px 0px 0px" }
+      );
+      observer.observe(el);
+      observers.push(observer);
+    });
+
+    return () => observers.forEach((o) => o.disconnect());
+  }, []);
+
   return (
     <nav
       className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
       style={{
-        background: scrolled
-          ? "rgba(2, 2, 10, 0.92)"
-          : "transparent",
+        background: scrolled ? "rgba(2, 2, 10, 0.92)" : "transparent",
         backdropFilter: scrolled ? "blur(16px)" : "none",
         borderBottom: scrolled
           ? "1px solid rgba(0, 245, 255, 0.08)"
@@ -49,22 +70,28 @@ export default function Nav() {
 
         {/* Desktop links */}
         <div className="hidden md:flex items-center gap-8">
-          {links.map((l) => (
-            <a
-              key={l.label}
-              href={l.href}
-              className="font-mono text-xs tracking-widest uppercase transition-colors duration-200"
-              style={{ color: "rgba(240,240,248,0.5)" }}
-              onMouseEnter={(e) =>
-                (e.currentTarget.style.color = "#00f5ff")
-              }
-              onMouseLeave={(e) =>
-                (e.currentTarget.style.color = "rgba(240,240,248,0.5)")
-              }
-            >
-              {l.label}
-            </a>
-          ))}
+          {links.map((l) => {
+            const isActive = activeSection === l.id;
+            return (
+              <a
+                key={l.label}
+                href={l.href}
+                className="font-mono text-xs tracking-widest uppercase transition-colors duration-200"
+                style={{
+                  color: isActive ? "#00f5ff" : "rgba(240,240,248,0.5)",
+                  textShadow: isActive ? "0 0 12px rgba(0,245,255,0.5)" : "none",
+                }}
+                onMouseEnter={(e) => (e.currentTarget.style.color = "#00f5ff")}
+                onMouseLeave={(e) =>
+                  (e.currentTarget.style.color = isActive
+                    ? "#00f5ff"
+                    : "rgba(240,240,248,0.5)")
+                }
+              >
+                {l.label}
+              </a>
+            );
+          })}
 
           {/* Available badge */}
           <a
@@ -102,9 +129,7 @@ export default function Nav() {
             <span
               className="block h-px bg-current transition-all duration-200"
               style={{
-                transform: menuOpen
-                  ? "rotate(-45deg) translateY(-4px)"
-                  : "none",
+                transform: menuOpen ? "rotate(-45deg) translateY(-4px)" : "none",
               }}
             />
           </div>
@@ -120,17 +145,20 @@ export default function Nav() {
             borderTop: "1px solid rgba(0, 245, 255, 0.08)",
           }}
         >
-          {links.map((l) => (
-            <a
-              key={l.label}
-              href={l.href}
-              className="block font-mono text-sm tracking-widest uppercase py-2"
-              style={{ color: "rgba(240,240,248,0.6)" }}
-              onClick={() => setMenuOpen(false)}
-            >
-              {l.label}
-            </a>
-          ))}
+          {links.map((l) => {
+            const isActive = activeSection === l.id;
+            return (
+              <a
+                key={l.label}
+                href={l.href}
+                className="block font-mono text-sm tracking-widest uppercase py-2"
+                style={{ color: isActive ? "#00f5ff" : "rgba(240,240,248,0.6)" }}
+                onClick={() => setMenuOpen(false)}
+              >
+                {l.label}
+              </a>
+            );
+          })}
           <div className="flex items-center gap-2 pt-2">
             <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
             <span className="font-mono text-xs text-green-400">

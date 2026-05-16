@@ -22,16 +22,18 @@ export default function Contact() {
           className="font-mono font-bold mb-6 leading-tight"
           style={{ fontSize: "clamp(2rem,5vw,3.5rem)" }}
         >
-          Let&apos;s build something{" "}
-          <span className="gradient-text">extraordinary.</span>
+          You have a problem.{" "}
+          <span className="gradient-text">I have the tools.</span>
         </h2>
 
         <p
           className="max-w-lg mx-auto text-sm leading-relaxed mb-12"
           style={{ color: "rgba(240,240,248,0.45)" }}
         >
-          Available for full-time remote roles and consulting projects.
-          Specializing in AI-powered automation and autonomous systems.
+          Whether it&apos;s a workflow eating 40 hours a week, a system that needs to think for
+          itself, or a product that needs to move fast — I&apos;ve built for radio stations, real
+          estate firms, luxury retailers, and my own 17-year platform. The pattern is always the
+          same: the right AI stack + production-grade judgment = something that actually ships.
         </p>
 
         {/* CTA buttons */}

@@ -4,36 +4,39 @@ import { useRef, useEffect, useState } from "react";
 const STEPS = [
   {
     num: "01",
-    title: "Understand the Problem",
-    body: "Deep-dive into requirements, constraints, and edge cases before writing a single line. The fastest code is code you don't have to rewrite.",
-    code: `// requirements.ts
-const constraints = await analyze({
-  requirements: userNeeds,
-  edgeCases: true,
-  depth: 'exhaustive'
+    title: "Think before you build",
+    body: "I spend more time in a doc than in an editor before touching code. Every constraint named, every edge case mapped. Rewrites are expensive. Clarity is free.",
+    code: `// Before touching code
+const blueprint = await analyze({
+  requirements: deep,
+  constraints: explicit,
+  edgeCases: exhaustive,
+  rewriteRisk: minimized
 });`,
   },
   {
     num: "02",
-    title: "Build with AI Leverage",
-    body: "Use AI as a multiplier, not a crutch. Schema-enforced outputs, validation layers, and human approval gates ensure quality at speed.",
-    code: `// pipeline.ts
+    title: "Multiply, don't shortcut",
+    body: "AI is a force multiplier — when you pair it with schema enforcement, validation layers, and the right human gates. I move 3–5× faster because the AI handles volume while I handle judgment.",
+    code: `// Claude as leverage, not replacement
 const output = await claude.generate({
   schema: z.object({ ... }),
-  validation: strict,
-  humanGate: highRisk ? true : auto
+  validation: "strict",
+  humanGate: isHighRisk(ctx) ? true : "auto",
+  speed: "3-5x",
 });`,
   },
   {
     num: "03",
-    title: "Ship to Production",
-    body: "Not a prototype. Not a demo. Production-grade systems with monitoring, error handling, and the reliability to run for years unattended.",
-    code: `// deploy.ts
+    title: "Ship for the long run",
+    body: "Production means it runs at 3am without me. Seoul.fm has been self-sustaining for 17 years. I build every system to that standard — monitoring, error handling, and the reliability to be forgotten about.",
+    code: `// Built to be forgotten about
 await deploy({
-  target: 'production',
+  target: "production",
   monitoring: true,
-  errorHandling: 'comprehensive',
-  uptime: '99.9%'
+  selfHealing: true,
+  expectedUptime: "17+ years",
+  humanRequired: false,
 });`,
   },
 ];

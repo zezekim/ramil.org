@@ -106,8 +106,7 @@ export default function Skills() {
             Full-stack, AI-native.
           </h2>
           <p className="max-w-xl text-sm leading-relaxed" style={{ color: "rgba(240,240,248,0.45)" }}>
-            17 years of building across the entire stack, now supercharged with AI integration
-            at every layer.
+            The full picture — from a Claude prompt to a Proxmox VM, from a pgvector query to a Cast SDK receiver. Seventeen years across the stack means nothing is a black box.
           </p>
         </div>
 
