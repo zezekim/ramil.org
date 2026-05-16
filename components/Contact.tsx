@@ -83,7 +83,7 @@ export default function Contact() {
             style={{ color: "rgba(240,240,248,0.3)" }}
           >
             <span>📍</span>
-            <span>Antipolo, Philippines</span>
+            <span>Manila, Philippines</span>
             <span className="mx-2">·</span>
             <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse inline-block" />
             <span style={{ color: "#10b981" }}>Available globally</span>

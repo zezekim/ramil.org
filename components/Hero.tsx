@@ -48,7 +48,7 @@ function AntipoloClock() {
       style={{ fontFamily: "var(--font-mono)", fontSize: "11px", color: "rgba(240,240,248,0.35)" }}
     >
       <span style={{ color: "rgba(0,245,255,0.4)" }}>◷</span>
-      <span>Current time in Antipolo — {time}</span>
+      <span>Current time in Manila — {time}</span>
     </div>
   );
 }
