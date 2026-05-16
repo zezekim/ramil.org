@@ -1,7 +1,6 @@
 import Nav from "@/components/Nav";
 import Hero from "@/components/Hero";
 import TechMarquee from "@/components/TechMarquee";
-import Stats from "@/components/Stats";
 import Work from "@/components/Work";
 import Process from "@/components/Process";
 import Skills from "@/components/Skills";
@@ -17,7 +16,6 @@ export default function Home() {
       <Nav />
       <Hero />
       <TechMarquee />
-      <Stats />
       <Work />
       <Process />
       <Skills />
