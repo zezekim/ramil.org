@@ -39,16 +39,10 @@ export default function Contact() {
         {/* CTA buttons */}
         <div className="flex flex-wrap justify-center gap-4 mb-16">
           <a
-            href="mailto:ramil.sususco@gmail.com"
-            className="btn-primary inline-flex items-center gap-2"
-          >
-            <span>✉</span> Get In Touch
-          </a>
-          <a
             href="https://seoul.fm"
             target="_blank"
             rel="noopener noreferrer"
-            className="btn-secondary inline-flex items-center gap-2"
+            className="btn-primary inline-flex items-center gap-2"
           >
             <span>🎵</span> Seoul.fm →
           </a>

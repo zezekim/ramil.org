@@ -21,6 +21,15 @@ export const metadata: Metadata = {
     "I build systems that run themselves. AI-native developer shipping production features in hours, not months. 17 years of building autonomous systems.",
   keywords: ["AI developer", "autonomous systems", "Next.js", "React", "Python"],
   authors: [{ name: "Ramil Sususco" }],
+  robots: {
+    index: false,
+    follow: false,
+    nocache: true,
+    googleBot: {
+      index: false,
+      follow: false,
+    },
+  },
   openGraph: {
     title: "Ramil Sususco — AI-native developer",
     description: "I build systems that run themselves.",
