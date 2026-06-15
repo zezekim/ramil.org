@@ -1,6 +1,6 @@
 # ramil.org
 
-Personal portfolio site for **Ramil Sususco** — an AI-native developer. A single-page,
+Personal portfolio site for **Ramil** — an AI-native developer. A single-page,
 dark "terminal/cyberpunk" experience that showcases production systems, client work, and
 tools, built with the Next.js App Router.
 
