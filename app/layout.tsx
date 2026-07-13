@@ -17,10 +17,10 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Ramil Sususco — AI-native engineer · Ships in days, runs for years",
+  title: "Ramil Sususco — AI-native developer · Ships in days, runs for years",
   description:
-    "AI-native engineer, 17 years shipping. I build complete production systems — distributed backends, AI pipelines, and the interfaces on top. Selected work: Seoul.fm, tofuvideo, MX Sentinel.",
-  keywords: ["AI engineer", "distributed systems", "Go", "Next.js", "Python", "FFmpeg"],
+    "AI-native developer, 17 years shipping. I build complete production systems — distributed backends, AI pipelines, and the interfaces on top. Selected work: Seoul.fm, tofuvideo, MX Sentinel.",
+  keywords: ["AI developer", "distributed systems", "Go", "Next.js", "Python", "FFmpeg"],
   authors: [{ name: "Ramil Sususco" }],
   robots: {
     index: false,
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "Ramil Sususco — AI-native engineer",
+    title: "Ramil Sususco — AI-native developer",
     description: "Ships in days. Runs for years.",
     type: "website",
   },

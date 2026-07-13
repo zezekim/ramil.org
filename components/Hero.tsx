@@ -37,7 +37,7 @@ export default function Hero() {
             borderBottom: "1px solid var(--rule)",
           }}
         >
-          <span>AI-native engineer</span>
+          <span>AI-native developer</span>
           <ManilaClock />
           <span>Building since 2009 — 17 yrs</span>
           <span style={{ color: "var(--live)" }}>Available for work</span>
@@ -46,7 +46,7 @@ export default function Hero() {
         {/* Masthead */}
         <div style={{ padding: "clamp(40px, 8vw, 88px) 0 44px" }}>
           <div className="eyebrow" style={{ marginBottom: "26px" }}>
-            — Full systems, one engineer
+            — Full systems, one developer
           </div>
 
           <h1
@@ -64,7 +64,7 @@ export default function Hero() {
             style={{ gridTemplateColumns: "minmax(0,1.5fr) minmax(0,1fr)", alignItems: "end" }}
           >
             <p style={{ fontSize: "clamp(15px, 1.9vw, 18px)", lineHeight: 1.55, maxWidth: "46ch", color: "var(--ink)" }}>
-              I&apos;m Ramil — an AI-native engineer. I build complete production
+              I&apos;m Ramil — an AI-native developer. I build complete production
               systems: distributed backends, AI pipelines, and the interfaces on
               top, shipped in days, not months. Seventeen years ago I put a radio
               station online. It&apos;s still running today, and I&apos;ve never had
