@@ -429,7 +429,7 @@ export default function Work() {
         <div className="flex items-baseline justify-between" style={{ marginBottom: "10px" }}>
           <div>
             <div className="eyebrow" style={{ marginBottom: "14px" }}>Selected Work</div>
-            <h2 className="display" style={{ fontSize: "clamp(2rem,4.5vw,3rem)" }}>Systems that deliver.</h2>
+            <h2 className="display" style={{ fontSize: "clamp(2rem,4.5vw,3rem)" }}>None of these are demos.</h2>
           </div>
           <span className="mono" style={{ fontSize: "12px", color: "var(--ink-3)", whiteSpace: "nowrap" }}>
             {PROJECTS.length} systems / 2009–2026
@@ -437,7 +437,7 @@ export default function Work() {
         </div>
 
         <p style={{ maxWidth: "52ch", fontSize: "14.5px", lineHeight: 1.6, color: "var(--ink-2)", marginBottom: "36px" }}>
-          Every entry below is real, shipped code — production platforms, client systems, and tools. Not portfolio demos. Select any row for the full technical detail.
+          Production platforms, client systems, and internal tools — every one shipped, and most still running. Open any row for the full technical detail.
         </p>
 
         <div style={{ borderBottom: "1px solid var(--rule)" }}>

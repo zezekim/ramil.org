@@ -46,17 +46,17 @@ export default function Hero() {
         {/* Masthead */}
         <div style={{ padding: "clamp(40px, 8vw, 88px) 0 44px" }}>
           <div className="eyebrow" style={{ marginBottom: "26px" }}>
-            — Portfolio / 2026
+            — Full systems, one engineer
           </div>
 
           <h1
             className="display"
-            style={{ fontSize: "clamp(2.7rem, 8.2vw, 6.4rem)", marginBottom: "36px" }}
+            style={{ fontSize: "clamp(3rem, 9vw, 7rem)", marginBottom: "36px" }}
           >
-            Engineer of systems
+            Ships in days.
             <br />
-            that know what to{" "}
-            <span style={{ color: "var(--red)" }}>do next.</span>
+            Runs for{" "}
+            <span style={{ color: "var(--red)" }}>years.</span>
           </h1>
 
           <div
@@ -64,10 +64,11 @@ export default function Hero() {
             style={{ gridTemplateColumns: "minmax(0,1.5fr) minmax(0,1fr)", alignItems: "end" }}
           >
             <p style={{ fontSize: "clamp(15px, 1.9vw, 18px)", lineHeight: 1.55, maxWidth: "46ch", color: "var(--ink)" }}>
-              Most developers build features. I build complete systems — distributed
-              backends, AI pipelines, and the interfaces on top — with 17 years of
-              production instinct behind every decision. I ship in days what agencies
-              quote in months.
+              I&apos;m Ramil — an AI-native engineer. I build complete production
+              systems: distributed backends, AI pipelines, and the interfaces on
+              top, shipped in days, not months. Seventeen years ago I put a radio
+              station online. It&apos;s still running today, and I&apos;ve never had
+              to touch it.
             </p>
 
             <div

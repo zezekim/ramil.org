@@ -8,16 +8,17 @@ export default function Contact() {
         <div className="eyebrow" style={{ marginBottom: "24px" }}>Get in Touch</div>
 
         <h2 className="display" style={{ fontSize: "clamp(2.4rem,7vw,5.5rem)", marginBottom: "28px" }}>
-          You have a problem.
+          Let&apos;s build something
           <br />
-          <span style={{ color: "var(--red)" }}>I have the tools.</span>
+          that <span style={{ color: "var(--red)" }}>lasts.</span>
         </h2>
 
         <p style={{ maxWidth: "56ch", fontSize: "16px", lineHeight: 1.6, color: "var(--ink-2)", marginBottom: "40px" }}>
-          Whether it&apos;s a workflow eating 40 hours a week, a system that needs to think for
-          itself, or a product that needs to move fast — I&apos;ve built for radio stations, real
-          estate firms, luxury retailers, and my own 17-year platform. The pattern is always the
-          same: the right AI stack plus production-grade judgment equals something that actually ships.
+          A workflow eating 40 hours a week. A system that needs to think for itself. A product
+          that has to ship now. I&apos;ve built for radio stations, real-estate firms, luxury
+          retailers, and my own platform for 17 years — and the result is always the same: the
+          right AI stack plus production judgment, shipped fast and built to keep running long
+          after launch.
         </p>
 
         {/* CTA row */}
