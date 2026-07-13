@@ -5,8 +5,8 @@ import { X } from "lucide-react";
 type Project = {
   id: string;
   status: "live" | "new";
-  emoji: string;
   title: string;
+  kind: string;
   tagline: string;
   description: string;
   tags: string[];
@@ -20,8 +20,8 @@ const PROJECTS: Project[] = [
   {
     id: "seoulfm",
     status: "live",
-    emoji: "🎵",
     title: "Seoul.fm",
+    kind: "K-pop streaming platform",
     tagline:
       "17 years on air. A full K-pop streaming platform — multi-bitrate spatial-audio HLS, pitch-scored karaoke, real-time chat, Chromecast, and a native Android app.",
     description:
@@ -50,27 +50,53 @@ const PROJECTS: Project[] = [
     featured: true,
   },
   {
+    id: "tofuvideo",
+    status: "new",
+    title: "tofuvideo",
+    kind: "AI video production platform",
+    tagline:
+      "Type a topic, get a finished video — a distributed AI pipeline that scripts, illustrates, voices, captions and assembles a full MP4. Local-first, runs with zero API keys.",
+    description:
+      "An AI video production platform. From a single topic (or a pasted script) it writes the script and scene breakdown, generates or sources each scene's visual, records a voiceover, times captions, produces avatar intro/outro, and assembles the final MP4 with FFmpeg. Every stage is a local-first provider chain that degrades gracefully, so the whole pipeline runs offline on free/local models — paid APIs (Claude, ElevenLabs, Replicate, HeyGen) are optional upgrades, not requirements.",
+    tags: ["AI Video", "Distributed Pipeline", "Local-first"],
+    stats: [
+      { label: "Pipeline Stages", value: "8" },
+      { label: "Provider Chains", value: "9" },
+      { label: "Zero-key Mode", value: "$0" },
+    ],
+    bullets: [
+      "8-stage job state machine (script → scenes → visuals → audio → avatar → assemble) run on a background thread pool with atomic job claiming and crash recovery",
+      "Provider registry with per-stage fallback chains across 9 engines — Ollama/Claude scripts, Kokoro/ElevenLabs voices, stock/ComfyUI/Replicate visuals, SadTalker/HeyGen avatars",
+      "Content-addressed clip cache — each scene clip is fingerprinted so editing one scene of a 40-scene video re-encodes only that clip while concat-copy stays valid",
+      "Parallel FFmpeg assembly with Ken Burns motion, sidechain-ducked background music, and libass-free TikTok word-by-word captions rendered via a Pillow overlay",
+      "Claude vision used only to select the best stock photo (never to generate it), with costs booked to a separate category so the image-source badge stays honest",
+      "Local-only mode structurally blocks every paid provider — a real product that renders end-to-end for $0",
+    ],
+    tech: ["Python/FastAPI", "Next.js", "FFmpeg", "ComfyUI", "Kokoro", "Claude", "SQLite/Postgres"],
+    featured: true,
+  },
+  {
     id: "mxsentinel",
     status: "new",
-    emoji: "🛡️",
     title: "MX Sentinel",
+    kind: "Email-infra observability",
     tagline:
-      "Datadog for email infrastructure — a 19-service Go mesh correlating SMTP telemetry, DNS auth state, and DMARC reports into AI root-cause diagnostics.",
+      "Datadog for email infrastructure — a 20-service Go mesh correlating SMTP telemetry, DNS auth state, and DMARC reports into AI root-cause diagnostics.",
     description:
       "An email-infrastructure observability and deliverability platform written in Go. It parses Postfix maillogs, continuously validates SPF/DKIM/DMARC/MX, ingests DMARC aggregate reports, and correlates the signals into operational incidents — then uses a local LLM to generate root-cause narratives and remediation steps. Multi-tenant, built for hosting providers and mail operators.",
     tags: ["Go Service Mesh", "Email Security", "AI Diagnostics"],
     stats: [
-      { label: "Go Services", value: "19" },
+      { label: "Go Services", value: "20" },
       { label: "REST Endpoints", value: "72" },
       { label: "DNS Findings", value: "19" },
-      { label: "Go Source", value: "23k LOC" },
+      { label: "Go Source", value: "25k LOC" },
     ],
     bullets: [
-      "19-binary Go service mesh (apid, dnsd, telemetryd, ingestd, dmarcd, correld, incidentd, aid…) over shared internal packages, communicating only via a NATS JetStream event bus",
+      "20-service Go mesh (apid, dnsd, telemetryd, ingestd, dmarcd, correld, incidentd, aid…) over shared internal packages, communicating only via a schema-validated NATS JetStream event bus",
       "DNS validation engine detecting 19 distinct finding codes across SPF/DKIM/DMARC/MX — SPF >10-lookup permerror, include loops, +all, DKIM weak/revoked, DMARC p=none/missing-rua",
-      "Privacy by construction — telemetry extracts metadata only, hashes recipients, never stores message bodies, and spools to disk if the bus is down",
-      "Correlation engine that detects per-provider rejection spikes and links them to recent DNS changes to emit a root-cause hypothesis",
-      "Local-LLM diagnostics (Ollama/vLLM via an OpenAI-compatible endpoint) writing ai_summary and ai_remediation onto incidents — metadata only",
+      "Deterministic correlation engine that detects per-provider rejection spikes and links them to recent DNS changes to emit a confidence-scored root-cause hypothesis",
+      "Local-LLM diagnostics (Ollama/vLLM via an OpenAI-compatible endpoint) writing ai_summary and ai_remediation onto incidents — metadata only, never message bodies",
+      "Privacy by construction — telemetry extracts metadata only, HMAC-hashes recipients, never stores bodies, and spools to disk if the bus is down",
       "Outbound-security suite — DNSBL self-monitor with fail-open Postfix auto-pull, volume-baseline anomaly detection, ARF feedback loops, and per-credential compromise detection",
       "AES-256-GCM encryption for stored cPanel/WHMCS/SMTP credentials; WHM JSON API + WHMCS billing integration",
       "PostgreSQL + ClickHouse + Redis + MinIO datastores, UUIDv7 event envelopes, and a 21-page Next.js dashboard",
@@ -83,8 +109,8 @@ const PROJECTS: Project[] = [
   {
     id: "dmarcparser",
     status: "live",
-    emoji: "📨",
     title: "dmarcparser",
+    kind: "DMARC suite + WHMCS module",
     tagline:
       "Turn raw DMARC aggregate XML into a live deliverability dashboard — a Go parser + viewer, plus a multi-tenant WHMCS client module.",
     description:
@@ -109,8 +135,8 @@ const PROJECTS: Project[] = [
   {
     id: "aicx",
     status: "new",
-    emoji: "💎",
     title: "AI CX System",
+    kind: "RAG customer-experience layer",
     tagline:
       "A luxury retailer's entire customer-experience layer — RAG knowledge base, Ritz-Carlton-grade reply generation, and n8n orchestration.",
     description:
@@ -133,8 +159,8 @@ const PROJECTS: Project[] = [
   {
     id: "inboxai",
     status: "new",
-    emoji: "📥",
     title: "InboxAI",
+    kind: "Gmail triage + draft generation",
     tagline:
       "Every email read, classified hot/warm/cold, and drafted in the agent's voice — before they open Gmail.",
     description:
@@ -157,8 +183,8 @@ const PROJECTS: Project[] = [
   {
     id: "listinglaunch",
     status: "new",
-    emoji: "🏠",
     title: "ListingLaunch",
+    kind: "Real-estate marketing kit",
     tagline:
       "Paste a listing, get an HTML email, social captions, a PDF flyer, and a 9:16 Reels video in seconds — all in the agent's voice.",
     description:
@@ -181,8 +207,8 @@ const PROJECTS: Project[] = [
   {
     id: "zoomtranscribe",
     status: "new",
-    emoji: "🎙️",
     title: "ZoomTranscribe",
+    kind: "Transcription + meeting notes",
     tagline:
       "Drop in a Zoom recording, get a time-synced transcript and AI meeting notes on a YouTube-style watch page.",
     description:
@@ -205,8 +231,8 @@ const PROJECTS: Project[] = [
   {
     id: "plumbingbros",
     status: "new",
-    emoji: "🚰",
     title: "PlumbingBros AI Quote Builder",
+    kind: "Trade quoting tool",
     tagline:
       "Paste messy trade job notes, get a professional Australian quote — pricing, GST, and compliance — in seconds.",
     description:
@@ -229,8 +255,8 @@ const PROJECTS: Project[] = [
   {
     id: "help2move",
     status: "new",
-    emoji: "📦",
     title: "Help2Move",
+    kind: "Lead-gen landing + quote form",
     tagline:
       "A conversion-focused Dutch moving-service landing page with a Google Places-powered, multi-step quote form.",
     description:
@@ -253,8 +279,8 @@ const PROJECTS: Project[] = [
   {
     id: "testtools",
     status: "new",
-    emoji: "🧰",
     title: "Test Tools",
+    kind: "3-in-1 utility bundle",
     tagline:
       "Three tools, one app: AI email drafts from a CSV, a Telegram voice-note logger, and a live K-pop radio dashboard.",
     description:
@@ -288,81 +314,59 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4"
-      style={{ background: "rgba(2,2,10,0.85)", backdropFilter: "blur(12px)" }}
+      className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto p-4 md:p-8"
+      style={{ background: "rgba(21,20,15,0.35)", backdropFilter: "blur(3px)" }}
       onClick={onClose}
     >
       <div
-        className="w-full max-w-2xl max-h-[85vh] overflow-y-auto rounded-2xl"
-        style={{
-          background: "#080810",
-          border: "1px solid rgba(0,245,255,0.15)",
-          boxShadow: "0 0 60px rgba(0,245,255,0.08), 0 32px 64px rgba(0,0,0,0.7)",
-        }}
+        className="w-full max-w-2xl my-auto"
+        style={{ background: "var(--paper)", border: "1px solid var(--ink-line)" }}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
         <div
-          className="sticky top-0 flex items-center justify-between p-6"
-          style={{ borderBottom: "1px solid rgba(0,245,255,0.08)", background: "#080810" }}
+          className="sticky top-0 flex items-start justify-between gap-4 p-6 md:p-8"
+          style={{ borderBottom: "2px solid var(--ink-line)", background: "var(--paper)" }}
         >
-          <div className="flex items-center gap-3">
-            <span className="text-3xl">{project.emoji}</span>
-            <div>
-              <h2 className="font-mono font-bold text-xl text-white">{project.title}</h2>
-              <span className={project.status === "live" ? "badge-live" : "badge-new"}>
-                {project.status}
-              </span>
-            </div>
+          <div>
+            <div className="eyebrow" style={{ marginBottom: "8px" }}>{project.kind}</div>
+            <h2 className="display" style={{ fontSize: "2rem", lineHeight: 1 }}>{project.title}</h2>
           </div>
-          <button
-            onClick={onClose}
-            className="p-2 rounded-lg transition-colors"
-            style={{ color: "rgba(240,240,248,0.4)" }}
-          >
-            <X size={18} />
+          <button onClick={onClose} aria-label="Close" className="p-2" style={{ color: "var(--ink-2)" }}>
+            <X size={20} />
           </button>
         </div>
 
-        <div className="p-6 space-y-6">
+        <div className="p-6 md:p-8" style={{ display: "flex", flexDirection: "column", gap: "28px" }}>
           {/* Stats */}
-          <div className="grid grid-cols-3 gap-3">
+          <div className="grid grid-cols-2 sm:grid-cols-4" style={{ borderTop: "1px solid var(--rule)" }}>
             {project.stats.map((s) => (
-              <div key={s.label} className="glass-card rounded-lg p-3 text-center">
-                <div className="font-mono font-bold text-lg" style={{ color: "#00f5ff" }}>
-                  {s.value}
-                </div>
-                <div className="font-mono text-xs mt-0.5" style={{ color: "rgba(240,240,248,0.4)" }}>
-                  {s.label}
-                </div>
+              <div key={s.label} style={{ padding: "14px 0", borderBottom: "1px solid var(--rule)", borderRight: "1px solid var(--rule)", paddingRight: "12px" }}>
+                <div className="tabnum" style={{ fontWeight: 800, fontSize: "1.5rem", letterSpacing: "-0.02em", color: "var(--red)" }}>{s.value}</div>
+                <div className="mono" style={{ fontSize: "10.5px", textTransform: "uppercase", letterSpacing: "0.05em", color: "var(--ink-3)", marginTop: "2px" }}>{s.label}</div>
               </div>
             ))}
           </div>
 
-          {/* Description */}
-          <p style={{ color: "rgba(240,240,248,0.65)", lineHeight: 1.7 }}>
-            {project.description}
-          </p>
+          <p style={{ color: "var(--ink-2)", lineHeight: 1.65, fontSize: "15px" }}>{project.description}</p>
 
-          {/* Bullets */}
           <div>
-            <div className="section-label mb-3">Technical Details</div>
-            <ul className="space-y-2">
+            <div className="label" style={{ marginBottom: "12px", paddingBottom: "8px", borderBottom: "1px solid var(--rule)" }}>Technical detail</div>
+            <ul style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
               {project.bullets.map((b, i) => (
-                <li key={i} className="flex gap-3 text-sm" style={{ color: "rgba(240,240,248,0.6)" }}>
-                  <span style={{ color: "#00f5ff", flexShrink: 0 }}>›</span>
+                <li key={i} style={{ display: "flex", gap: "12px", fontSize: "13.5px", lineHeight: 1.55, color: "var(--ink-2)" }}>
+                  <span className="mono" style={{ color: "var(--red)", flexShrink: 0 }}>{String(i + 1).padStart(2, "0")}</span>
                   {b}
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Tech stack */}
           <div>
-            <div className="section-label mb-3">Stack</div>
+            <div className="label" style={{ marginBottom: "12px", paddingBottom: "8px", borderBottom: "1px solid var(--rule)" }}>Stack</div>
             <div className="flex flex-wrap gap-2">
               {project.tech.map((t) => (
-                <span key={t} className="tech-badge">{t}</span>
+                <span key={t} className="tag">{t}</span>
               ))}
             </div>
           </div>
@@ -372,167 +376,95 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
   );
 }
 
-function FeaturedCard({ project, onClick }: { project: Project; onClick: () => void }) {
+function WorkRow({ project, index, onClick }: { project: Project; index: number; onClick: () => void }) {
   return (
-    <div
-      className="glass-card rounded-xl p-7 cursor-pointer group relative overflow-hidden col-span-full"
+    <button
       onClick={onClick}
+      className="work-row"
       style={{
-        border: "1px solid rgba(0,245,255,0.15)",
-        background: "rgba(10,10,20,0.8)",
+        display: "grid",
+        gridTemplateColumns: "46px minmax(0,1.5fr) minmax(0,2fr) auto",
+        gap: "24px",
+        alignItems: "baseline",
+        textAlign: "left",
+        width: "100%",
+        background: "transparent",
+        border: 0,
+        borderTop: "1px solid var(--rule)",
+        padding: "24px 0",
+        cursor: "pointer",
       }}
     >
-      {/* Hover glow */}
-      <div
-        className="absolute inset-0 opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-300 rounded-xl"
-        style={{
-          background: "radial-gradient(ellipse at top left, rgba(0,245,255,0.06) 0%, transparent 60%)",
-        }}
-      />
-      {/* Featured accent line */}
-      <div
-        className="absolute top-0 left-0 right-0 h-[2px] rounded-t-xl"
-        style={{ background: "linear-gradient(90deg, #00f5ff, #7c3aed)" }}
-      />
-
-      <div className="flex flex-col md:flex-row md:items-start gap-6">
-        {/* Left */}
-        <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-3 mb-3">
-            <span className="text-4xl">{project.emoji}</span>
-            <div>
-              <div className="flex items-center gap-2 mb-1">
-                <h3 className="font-mono font-bold text-2xl text-white">{project.title}</h3>
-                <span className="badge-live">live</span>
-                <span
-                  className="font-mono text-xs px-2 py-0.5 rounded"
-                  style={{
-                    background: "rgba(0,245,255,0.08)",
-                    border: "1px solid rgba(0,245,255,0.2)",
-                    color: "rgba(0,245,255,0.7)",
-                  }}
-                >
-                  Flagship
-                </span>
-              </div>
-              <p className="text-sm leading-relaxed" style={{ color: "rgba(240,240,248,0.5)" }}>
-                {project.tagline}
-              </p>
-            </div>
-          </div>
-
-          <div className="flex flex-wrap gap-1.5 mt-4">
-            {project.tags.map((t) => (
-              <span key={t} className="tech-badge" style={{ fontSize: "10px" }}>{t}</span>
-            ))}
-          </div>
-        </div>
-
-        {/* Right — inline stats */}
-        <div className="flex gap-6 md:gap-8 flex-shrink-0">
-          {project.stats.slice(0, 3).map((s) => (
-            <div key={s.label} className="text-center">
-              <div className="font-mono font-bold text-xl" style={{ color: "#00f5ff" }}>
-                {s.value}
-              </div>
-              <div className="font-mono text-xs mt-0.5" style={{ color: "rgba(240,240,248,0.35)" }}>
-                {s.label}
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <div
-        className="font-mono text-xs flex items-center gap-1 mt-5 transition-all duration-200 group-hover:gap-2"
-        style={{ color: "rgba(0,245,255,0.5)" }}
-      >
-        View Details
-        <span style={{ color: "#00f5ff" }}>→</span>
-      </div>
-    </div>
-  );
-}
-
-function ProjectCard({ project, onClick }: { project: Project; onClick: () => void }) {
-  return (
-    <div
-      className="glass-card rounded-xl p-5 cursor-pointer group relative overflow-hidden"
-      onClick={onClick}
-    >
-      {/* Hover glow */}
-      <div
-        className="absolute inset-0 opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-300 rounded-xl"
-        style={{
-          background: "radial-gradient(ellipse at top left, rgba(0,245,255,0.04) 0%, transparent 60%)",
-        }}
-      />
-
-      <div className="flex items-start justify-between mb-3">
-        <span className="text-2xl">{project.emoji}</span>
-        <span className={project.status === "live" ? "badge-live" : "badge-new"}>
-          {project.status}
+      <span className="mono tabnum" style={{ fontSize: "13px", fontWeight: 600, color: "var(--red)" }}>
+        {String(index + 1).padStart(2, "0")}
+      </span>
+      <span>
+        <span style={{ display: "flex", alignItems: "center", gap: "10px", flexWrap: "wrap" }}>
+          <span className="display" style={{ fontSize: "1.5rem", lineHeight: 1.1 }}>{project.title}</span>
+          {project.featured && (
+            <span className="mono" style={{ fontSize: "10px", letterSpacing: "0.06em", textTransform: "uppercase", color: "var(--red)", border: "1px solid var(--red)", padding: "2px 6px" }}>
+              Flagship
+            </span>
+          )}
         </span>
-      </div>
-
-      <h3 className="font-mono font-bold text-base text-white mb-2">
-        {project.title}
-      </h3>
-      <p className="text-sm leading-relaxed mb-4" style={{ color: "rgba(240,240,248,0.45)" }}>
-        {project.tagline}
-      </p>
-
-      <div className="flex flex-wrap gap-1.5 mb-4">
-        {project.tags.map((t) => (
-          <span key={t} className="tech-badge" style={{ fontSize: "10px" }}>{t}</span>
-        ))}
-      </div>
-
-      <div
-        className="font-mono text-xs flex items-center gap-1 transition-all duration-200 group-hover:gap-2"
-        style={{ color: "rgba(0,245,255,0.5)" }}
-      >
-        View Details
-        <span style={{ color: "#00f5ff" }}>→</span>
-      </div>
-    </div>
+        <span className="mono" style={{ display: "block", fontSize: "11px", letterSpacing: "0.04em", textTransform: "uppercase", color: "var(--ink-3)", marginTop: "6px" }}>
+          {project.kind}
+        </span>
+      </span>
+      <span style={{ fontSize: "14px", lineHeight: 1.5, color: "var(--ink-2)" }}>{project.tagline}</span>
+      <span className={`status ${project.status}`} style={{ justifySelf: "end" }}>
+        <span className="dot" />
+        {project.status === "live" ? "Live" : "New"}
+      </span>
+    </button>
   );
 }
 
 export default function Work() {
   const [activeProject, setActiveProject] = useState<Project | null>(null);
 
-  const featured = PROJECTS.filter((p) => p.featured);
-  const rest = PROJECTS.filter((p) => !p.featured);
-
   return (
-    <section id="work" className="py-24">
-      <div className="max-w-7xl mx-auto px-6">
-        {/* Header */}
-        <div className="mb-16">
-          <div className="section-label mb-3">Selected Work</div>
-          <h2 className="font-mono font-bold text-3xl md:text-4xl text-white mb-4">
-            Systems that deliver.
-          </h2>
-          <p className="max-w-xl text-sm leading-relaxed" style={{ color: "rgba(240,240,248,0.45)" }}>
-            Every project below is real, built code — production platforms, client systems, and tools. Not portfolio demos.
-          </p>
+    <section id="work" style={{ padding: "80px 0" }}>
+      <div className="wrap">
+        <div className="flex items-baseline justify-between" style={{ marginBottom: "10px" }}>
+          <div>
+            <div className="eyebrow" style={{ marginBottom: "14px" }}>Selected Work</div>
+            <h2 className="display" style={{ fontSize: "clamp(2rem,4.5vw,3rem)" }}>Systems that deliver.</h2>
+          </div>
+          <span className="mono" style={{ fontSize: "12px", color: "var(--ink-3)", whiteSpace: "nowrap" }}>
+            {PROJECTS.length} systems / 2009–2026
+          </span>
         </div>
 
-        {/* Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {featured.map((p) => (
-            <FeaturedCard key={p.id} project={p} onClick={() => setActiveProject(p)} />
-          ))}
-          {rest.map((p) => (
-            <ProjectCard key={p.id} project={p} onClick={() => setActiveProject(p)} />
+        <p style={{ maxWidth: "52ch", fontSize: "14.5px", lineHeight: 1.6, color: "var(--ink-2)", marginBottom: "36px" }}>
+          Every entry below is real, shipped code — production platforms, client systems, and tools. Not portfolio demos. Select any row for the full technical detail.
+        </p>
+
+        <div style={{ borderBottom: "1px solid var(--rule)" }}>
+          {PROJECTS.map((p, i) => (
+            <WorkRow key={p.id} project={p} index={i} onClick={() => setActiveProject(p)} />
           ))}
         </div>
       </div>
 
-      {activeProject && (
-        <ProjectModal project={activeProject} onClose={() => setActiveProject(null)} />
-      )}
+      {activeProject && <ProjectModal project={activeProject} onClose={() => setActiveProject(null)} />}
+
+      <style jsx>{`
+        .work-row:hover {
+          padding-left: 10px !important;
+          padding-right: 10px !important;
+          background: var(--paper-2) !important;
+        }
+        @media (max-width: 760px) {
+          .work-row {
+            grid-template-columns: 34px 1fr auto !important;
+            gap: 8px 14px !important;
+          }
+          .work-row > :nth-child(3) {
+            grid-column: 2 / -1 !important;
+          }
+        }
+      `}</style>
     </section>
   );
 }

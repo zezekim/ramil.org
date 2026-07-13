@@ -14,124 +14,89 @@ export default function Nav() {
   const [activeSection, setActiveSection] = useState<string>("");
 
   useEffect(() => {
-    const handler = () => setScrolled(window.scrollY > 30);
+    const handler = () => setScrolled(window.scrollY > 24);
+    handler();
     window.addEventListener("scroll", handler, { passive: true });
     return () => window.removeEventListener("scroll", handler);
   }, []);
 
   useEffect(() => {
-    const sectionIds = links.map((l) => l.id);
     const observers: IntersectionObserver[] = [];
-
-    sectionIds.forEach((id) => {
+    links.forEach(({ id }) => {
       const el = document.getElementById(id);
       if (!el) return;
       const observer = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) {
-            setActiveSection(id);
-          }
-        },
+        ([entry]) => entry.isIntersecting && setActiveSection(id),
         { threshold: 0.3, rootMargin: "-64px 0px 0px 0px" }
       );
       observer.observe(el);
       observers.push(observer);
     });
-
     return () => observers.forEach((o) => o.disconnect());
   }, []);
 
   return (
     <nav
-      className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+      className="fixed top-0 left-0 right-0 z-50 transition-colors duration-300"
       style={{
-        background: scrolled ? "rgba(2, 2, 10, 0.92)" : "transparent",
-        backdropFilter: scrolled ? "blur(16px)" : "none",
-        borderBottom: scrolled
-          ? "1px solid rgba(0, 245, 255, 0.08)"
-          : "1px solid transparent",
+        background: scrolled ? "rgba(244,243,239,0.9)" : "transparent",
+        backdropFilter: scrolled ? "blur(10px)" : "none",
+        borderBottom: `1px solid ${scrolled ? "var(--rule)" : "transparent"}`,
       }}
     >
-      <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-        {/* Logo */}
+      <div className="wrap h-[64px] flex items-center justify-between">
+        {/* Wordmark */}
         <a
           href="#"
-          className="font-mono text-lg font-bold tracking-wider"
-          style={{ color: "#00f5ff" }}
+          className="font-bold tracking-tight"
+          style={{ fontSize: "17px", letterSpacing: "0.02em", color: "var(--ink)" }}
         >
-          RS
-          <span
-            className="ml-1 text-xs font-normal opacity-50"
-            style={{ fontFamily: "var(--font-mono)" }}
-          >
-            .dev
-          </span>
+          RAMIL<span style={{ color: "var(--red)" }}>.</span>
         </a>
 
         {/* Desktop links */}
-        <div className="hidden md:flex items-center gap-8">
+        <div className="hidden md:flex items-center gap-9">
           {links.map((l) => {
             const isActive = activeSection === l.id;
             return (
               <a
                 key={l.label}
                 href={l.href}
-                className="font-mono text-xs tracking-widest uppercase transition-colors duration-200"
+                className="mono transition-colors duration-200"
                 style={{
-                  color: isActive ? "#00f5ff" : "rgba(240,240,248,0.5)",
-                  textShadow: isActive ? "0 0 12px rgba(0,245,255,0.5)" : "none",
+                  fontSize: "12px",
+                  letterSpacing: "0.08em",
+                  textTransform: "uppercase",
+                  color: isActive ? "var(--red)" : "var(--ink-2)",
+                  borderBottom: isActive ? "1px solid var(--red)" : "1px solid transparent",
+                  paddingBottom: "2px",
                 }}
-                onMouseEnter={(e) => (e.currentTarget.style.color = "#00f5ff")}
-                onMouseLeave={(e) =>
-                  (e.currentTarget.style.color = isActive
-                    ? "#00f5ff"
-                    : "rgba(240,240,248,0.5)")
-                }
               >
                 {l.label}
               </a>
             );
           })}
-
-          {/* Available badge */}
-          <a
-            href="#contact"
-            className="flex items-center gap-2 px-3 py-1.5 rounded-full border transition-all duration-200"
-            style={{
-              border: "1px solid rgba(16,185,129,0.3)",
-              background: "rgba(16,185,129,0.06)",
-            }}
+          <span
+            className="mono flex items-center gap-2"
+            style={{ fontSize: "11px", letterSpacing: "0.05em", textTransform: "uppercase", color: "var(--live)" }}
           >
-            <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
-            <span className="font-mono text-xs text-green-400 tracking-wide">
-              Available
-            </span>
-          </a>
+            <span className="w-1.5 h-1.5 rounded-full inline-block" style={{ background: "var(--live)" }} />
+            Available
+          </span>
         </div>
 
         {/* Mobile hamburger */}
         <button
           className="md:hidden p-2"
+          aria-label="Menu"
+          aria-expanded={menuOpen}
           onClick={() => setMenuOpen(!menuOpen)}
-          style={{ color: "rgba(240,240,248,0.7)" }}
+          style={{ color: "var(--ink)" }}
         >
           <div className="w-5 space-y-1">
-            <span
-              className="block h-px bg-current transition-all duration-200"
-              style={{
-                transform: menuOpen ? "rotate(45deg) translateY(4px)" : "none",
-              }}
-            />
-            <span
-              className="block h-px bg-current transition-all duration-200"
-              style={{ opacity: menuOpen ? 0 : 1 }}
-            />
-            <span
-              className="block h-px bg-current transition-all duration-200"
-              style={{
-                transform: menuOpen ? "rotate(-45deg) translateY(-4px)" : "none",
-              }}
-            />
+            <span className="block h-px bg-current transition-all duration-200" style={{ transform: menuOpen ? "rotate(45deg) translateY(4px)" : "none" }} />
+            <span className="block h-px bg-current transition-all duration-200" style={{ opacity: menuOpen ? 0 : 1 }} />
+            <span className="block h-px bg-current transition-all duration-200" style={{ transform: menuOpen ? "rotate(-45deg) translateY(-4px)" : "none" }} />
           </div>
         </button>
       </div>
@@ -139,31 +104,23 @@ export default function Nav() {
       {/* Mobile menu */}
       {menuOpen && (
         <div
-          className="md:hidden px-6 pb-6 space-y-4"
-          style={{
-            background: "rgba(2, 2, 10, 0.98)",
-            borderTop: "1px solid rgba(0, 245, 255, 0.08)",
-          }}
+          className="md:hidden px-[30px] pb-6 space-y-4"
+          style={{ background: "var(--paper)", borderTop: "1px solid var(--rule)" }}
         >
-          {links.map((l) => {
-            const isActive = activeSection === l.id;
-            return (
-              <a
-                key={l.label}
-                href={l.href}
-                className="block font-mono text-sm tracking-widest uppercase py-2"
-                style={{ color: isActive ? "#00f5ff" : "rgba(240,240,248,0.6)" }}
-                onClick={() => setMenuOpen(false)}
-              >
-                {l.label}
-              </a>
-            );
-          })}
-          <div className="flex items-center gap-2 pt-2">
-            <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
-            <span className="font-mono text-xs text-green-400">
-              Available for Remote Work
-            </span>
+          {links.map((l) => (
+            <a
+              key={l.label}
+              href={l.href}
+              className="mono block py-2"
+              style={{ fontSize: "13px", letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--ink)" }}
+              onClick={() => setMenuOpen(false)}
+            >
+              {l.label}
+            </a>
+          ))}
+          <div className="mono flex items-center gap-2 pt-2" style={{ fontSize: "11px", color: "var(--live)" }}>
+            <span className="w-1.5 h-1.5 rounded-full inline-block" style={{ background: "var(--live)" }} />
+            Available for remote work
           </div>
         </div>
       )}

@@ -6,38 +6,19 @@ const STEPS = [
     num: "01",
     title: "Think before you build",
     body: "I spend more time in a doc than in an editor before touching code. Every constraint named, every edge case mapped. Rewrites are expensive. Clarity is free.",
-    code: `// Before touching code
-const blueprint = await analyze({
-  requirements: deep,
-  constraints: explicit,
-  edgeCases: exhaustive,
-  rewriteRisk: minimized
-});`,
+    note: "requirements: deep · constraints: explicit · edge-cases: exhaustive",
   },
   {
     num: "02",
     title: "Multiply, don't shortcut",
-    body: "AI is a force multiplier — when you pair it with schema enforcement, validation layers, and the right human gates. I move 3–5× faster because the AI handles volume while I handle judgment.",
-    code: `// Claude as leverage, not replacement
-const output = await claude.generate({
-  schema: z.object({ ... }),
-  validation: "strict",
-  humanGate: isHighRisk(ctx) ? true : "auto",
-  speed: "3-5x",
-});`,
+    body: "AI is a force multiplier — paired with schema enforcement, validation layers, and the right human gates. I move 3–5× faster because the model handles volume while I handle judgment.",
+    note: "schema: strict · validation: enforced · human-gate: high-risk only",
   },
   {
     num: "03",
     title: "Ship for the long run",
     body: "Production means it runs at 3am without me. Seoul.fm has been self-sustaining for 17 years. I build every system to that standard — monitoring, error handling, and the reliability to be forgotten about.",
-    code: `// Built to be forgotten about
-await deploy({
-  target: "production",
-  monitoring: true,
-  selfHealing: true,
-  expectedUptime: "17+ years",
-  humanRequired: false,
-});`,
+    note: "monitoring: on · self-healing: on · expected-uptime: 17+ years",
   },
 ];
 
@@ -49,7 +30,12 @@ export default function Process() {
     const el = ref.current;
     if (!el) return;
     const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) { setActive(true); observer.disconnect(); } },
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setActive(true);
+          observer.disconnect();
+        }
+      },
       { threshold: 0.1 }
     );
     observer.observe(el);
@@ -60,77 +46,61 @@ export default function Process() {
     <section
       id="process"
       ref={ref as React.RefObject<HTMLElement>}
-      className="py-24"
-      style={{ borderTop: "1px solid rgba(0,245,255,0.06)" }}
+      style={{ padding: "80px 0", borderTop: "2px solid var(--ink-line)" }}
     >
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="mb-16">
-          <div className="section-label mb-3">How I Work</div>
-          <h2 className="font-mono font-bold text-3xl md:text-4xl text-white mb-4">
+      <div className="wrap">
+        <div style={{ marginBottom: "44px" }}>
+          <div className="eyebrow" style={{ marginBottom: "14px" }}>How I Work</div>
+          <h2 className="display" style={{ fontSize: "clamp(2rem,4.5vw,3rem)", marginBottom: "16px" }}>
             Speed without shortcuts.
           </h2>
-          <p className="max-w-xl text-sm leading-relaxed" style={{ color: "rgba(240,240,248,0.45)" }}>
-            AI-native workflow that ships production features in hours, with the reliability
-            you&apos;d expect from months of development.
+          <p style={{ maxWidth: "52ch", fontSize: "14.5px", lineHeight: 1.6, color: "var(--ink-2)" }}>
+            An AI-native workflow that ships production features in hours, with the
+            reliability you&apos;d expect from months of development.
           </p>
         </div>
 
-        <div className="space-y-6">
+        <div style={{ borderTop: "1px solid var(--rule)" }}>
           {STEPS.map((step, i) => (
             <div
               key={step.num}
-              className="glass-card rounded-xl overflow-hidden"
+              className={`reveal ${active ? "in" : ""}`}
               style={{
-                opacity: active ? 1 : 0,
-                transform: active ? "translateX(0)" : "translateX(-20px)",
-                transition: `opacity 0.6s ease ${i * 150}ms, transform 0.6s ease ${i * 150}ms`,
+                display: "grid",
+                gridTemplateColumns: "minmax(0,1fr) minmax(0,1.1fr)",
+                gap: "32px",
+                alignItems: "start",
+                padding: "36px 0",
+                borderBottom: "1px solid var(--rule)",
+                transitionDelay: `${i * 120}ms`,
               }}
             >
-              <div className="grid md:grid-cols-2">
-                {/* Left */}
-                <div className="p-8 border-r border-[rgba(0,245,255,0.06)]">
-                  <div
-                    className="font-mono font-bold text-5xl mb-4 leading-none"
-                    style={{ color: "rgba(0,245,255,0.15)" }}
-                  >
-                    {step.num}
-                  </div>
-                  <h3 className="font-mono font-bold text-xl text-white mb-3">
-                    {step.title}
-                  </h3>
-                  <p className="text-sm leading-relaxed" style={{ color: "rgba(240,240,248,0.5)" }}>
-                    {step.body}
-                  </p>
-                </div>
-                {/* Right — code */}
-                <div
-                  className="p-6"
-                  style={{ background: "rgba(0,0,0,0.3)" }}
+              <div style={{ display: "flex", gap: "24px" }}>
+                <span
+                  className="display tabnum"
+                  style={{ fontSize: "clamp(2.5rem,5vw,4rem)", color: "var(--red)", lineHeight: 0.9, flexShrink: 0 }}
                 >
-                  <div
-                    className="text-xs leading-relaxed whitespace-pre"
-                    style={{
-                      fontFamily: "var(--font-mono)",
-                      color: "rgba(240,240,248,0.4)",
-                    }}
-                  >
-                    <span style={{ color: "rgba(0,245,255,0.5)" }}>
-                      {step.code.split("\n")[0]}
-                    </span>
-                    {"\n"}
-                    {step.code.split("\n").slice(1).map((line, li) => (
-                      <div key={li}>
-                        {line.includes("await") || line.includes("const") || line.includes("//") ? (
-                          <span style={{ color: line.includes("//") ? "rgba(107,114,128,0.8)" : "rgba(167,139,250,0.7)" }}>
-                            {line}
-                          </span>
-                        ) : (
-                          <span>{line}</span>
-                        )}
-                      </div>
-                    ))}
-                  </div>
+                  {step.num}
+                </span>
+                <div>
+                  <h3 className="display" style={{ fontSize: "1.4rem", marginBottom: "12px" }}>{step.title}</h3>
+                  <p style={{ fontSize: "14.5px", lineHeight: 1.6, color: "var(--ink-2)" }}>{step.body}</p>
                 </div>
+              </div>
+              <div
+                className="mono"
+                style={{
+                  fontSize: "12px",
+                  lineHeight: 1.9,
+                  color: "var(--ink-2)",
+                  background: "var(--paper-2)",
+                  borderLeft: "2px solid var(--red)",
+                  padding: "16px 18px",
+                }}
+              >
+                <span style={{ color: "var(--ink-3)" }}>{"// "}approach</span>
+                <br />
+                {step.note}
               </div>
             </div>
           ))}

@@ -11,13 +11,12 @@ export default function ScrollProgress() {
     return () => window.removeEventListener("scroll", h);
   }, []);
   return (
-    <div className="fixed top-0 left-0 right-0 h-[2px] z-[60]" style={{ background: "rgba(0,245,255,0.06)" }}>
+    <div aria-hidden className="fixed top-0 left-0 right-0 h-[2px] z-[60]" style={{ background: "transparent" }}>
       <div
         style={{
           width: `${pct}%`,
           height: "100%",
-          background: "linear-gradient(90deg, #7c3aed, #00f5ff)",
-          boxShadow: "0 0 10px rgba(0,245,255,0.6)",
+          background: "var(--red)",
           transition: "width 0.1s linear",
         }}
       />

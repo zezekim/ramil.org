@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
-import { JetBrains_Mono, Inter } from "next/font/google";
+import { JetBrains_Mono, Archivo } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
-const inter = Inter({
+const archivo = Archivo({
   subsets: ["latin"],
   variable: "--font-sans",
+  weight: ["400", "500", "600", "700", "800", "900"],
   display: "swap",
 });
 
@@ -16,10 +17,10 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Ramil Sususco — AI-native developer",
+  title: "Ramil Sususco — Engineer of systems that know what to do next",
   description:
-    "I build systems that run themselves. AI-native developer shipping production features in hours, not months. 17 years of building autonomous systems.",
-  keywords: ["AI developer", "autonomous systems", "Next.js", "React", "Python"],
+    "AI-native engineer with 17 years of production instinct. I build complete systems — distributed backends, AI pipelines, and the interfaces on top. Selected work: Seoul.fm, tofuvideo, MX Sentinel.",
+  keywords: ["AI engineer", "distributed systems", "Go", "Next.js", "Python", "FFmpeg"],
   authors: [{ name: "Ramil Sususco" }],
   robots: {
     index: false,
@@ -31,8 +32,8 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "Ramil Sususco — AI-native developer",
-    description: "I build systems that run themselves.",
+    title: "Ramil Sususco — AI-native engineer",
+    description: "Systems that know what to do next.",
     type: "website",
   },
 };
@@ -43,8 +44,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable}`}>
-      <body className="scanlines">
+    <html lang="en" className={`${archivo.variable} ${jetbrainsMono.variable}`}>
+      <body>
         {children}
         <Analytics />
       </body>

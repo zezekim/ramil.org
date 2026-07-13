@@ -3,75 +3,69 @@ import { useRef, useEffect, useState } from "react";
 
 const SKILLS = [
   {
-    icon: "🤖",
+    num: "A",
     category: "AI & Automation",
-    color: "#00f5ff",
     items: [
       "Claude Code — primary dev environment",
       "RAG systems, pgvector, vector DBs",
       "n8n workflow orchestration",
-      "OpenClaw agentic pipelines",
+      "Agentic pipelines & tool use",
       "Prompt engineering & Claude Skills",
       "Google Gemini, OpenAI API",
     ],
   },
   {
-    icon: "⚙️",
+    num: "B",
     category: "Backend Development",
-    color: "#7c3aed",
     items: [
-      "Python (Flask, FastAPI, async, Redis/RQ)",
+      "Go (service meshes, NATS, ClickHouse)",
+      "Python (FastAPI, Flask, async, Redis/RQ)",
       "Node.js / Express",
-      "PHP (modern, strict typing)",
       "PostgreSQL / MySQL / Supabase / Redis",
-      "REST API design (78-endpoint systems)",
+      "REST API design (72-endpoint systems)",
     ],
   },
   {
-    icon: "⚡",
-    category: "Real-Time Systems",
-    color: "#f59e0b",
+    num: "C",
+    category: "Real-Time & Media",
     items: [
-      "Server-Sent Events (SSE)",
-      "Redis pub/sub messaging",
+      "Server-Sent Events & Redis pub/sub",
       "Event-driven architecture",
-      "<200ms push update latency",
       "HLS/CMAF adaptive streaming",
-    ],
-  },
-  {
-    icon: "🎨",
-    category: "Frontend & Mobile",
-    color: "#10b981",
-    items: [
-      "React / Next.js / Modern JavaScript",
-      "Flutter — Android app on Play Store",
-      "Progressive Web Apps (PWA)",
-      "Tailwind CSS, shadcn/ui",
+      "FFmpeg / broadcast audio processing",
       "Remotion — programmatic video",
     ],
   },
   {
-    icon: "🔧",
+    num: "D",
+    category: "Frontend & Mobile",
+    items: [
+      "React / Next.js / TypeScript",
+      "Flutter — Android app on Play Store",
+      "Progressive Web Apps (PWA)",
+      "Tailwind CSS, shadcn/ui",
+      "Design systems & motion",
+    ],
+  },
+  {
+    num: "E",
     category: "Infrastructure",
-    color: "#ef4444",
     items: [
       "Proxmox — multi-VM production hosting",
       "Docker / containerization",
-      "Linux system administration (8+ years)",
-      "FFmpeg / broadcast audio processing",
+      "Linux system administration (8+ yrs)",
+      "Caddy, NATS, MinIO, distroless builds",
       "Cloudflare Workers, BunnyCDN",
     ],
   },
   {
-    icon: "🚀",
+    num: "F",
     category: "Approach",
-    color: "#00f5ff",
     items: [
       "AI-native development (3–5× faster)",
-      "Autonomous systems design",
+      "Distributed / autonomous systems",
       "Production reliability focus",
-      "Pieced-together systems thinking",
+      "Privacy & correctness by construction",
       "Ship it, learn, iterate",
     ],
   },
@@ -85,7 +79,12 @@ export default function Skills() {
     const el = ref.current;
     if (!el) return;
     const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) { setActive(true); observer.disconnect(); } },
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setActive(true);
+          observer.disconnect();
+        }
+      },
       { threshold: 0.1 }
     );
     observer.observe(el);
@@ -96,56 +95,42 @@ export default function Skills() {
     <section
       id="skills"
       ref={ref as React.RefObject<HTMLElement>}
-      className="py-24"
-      style={{ borderTop: "1px solid rgba(0,245,255,0.06)" }}
+      style={{ padding: "80px 0", borderTop: "2px solid var(--ink-line)" }}
     >
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="mb-16">
-          <div className="section-label mb-3">Capabilities</div>
-          <h2 className="font-mono font-bold text-3xl md:text-4xl text-white mb-4">
+      <div className="wrap">
+        <div style={{ marginBottom: "44px" }}>
+          <div className="eyebrow" style={{ marginBottom: "14px" }}>Capabilities</div>
+          <h2 className="display" style={{ fontSize: "clamp(2rem,4.5vw,3rem)", marginBottom: "16px" }}>
             Full-stack, AI-native.
           </h2>
-          <p className="max-w-xl text-sm leading-relaxed" style={{ color: "rgba(240,240,248,0.45)" }}>
-            The full picture — from a Claude prompt to a Proxmox VM, from a pgvector query to a Cast SDK receiver. Seventeen years across the stack means nothing is a black box.
+          <p style={{ maxWidth: "54ch", fontSize: "14.5px", lineHeight: 1.6, color: "var(--ink-2)" }}>
+            The full picture — from a Claude prompt to a Proxmox VM, from a pgvector query
+            to a Go service mesh. Seventeen years across the stack means nothing is a black box.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div
+          className="grid gap-x-10"
+          style={{ gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", borderTop: "1px solid var(--rule)" }}
+        >
           {SKILLS.map((skill, i) => (
             <div
               key={skill.category}
-              className="glass-card rounded-xl p-6 group"
+              className={`reveal ${active ? "in" : ""}`}
               style={{
-                opacity: active ? 1 : 0,
-                transform: active ? "translateY(0)" : "translateY(24px)",
-                transition: `opacity 0.6s ease ${i * 80}ms, transform 0.6s ease ${i * 80}ms`,
+                padding: "26px 0",
+                borderBottom: "1px solid var(--rule)",
+                transitionDelay: `${i * 70}ms`,
               }}
             >
-              {/* Header */}
-              <div className="flex items-center gap-3 mb-5">
-                <div
-                  className="w-10 h-10 rounded-lg flex items-center justify-center text-lg flex-shrink-0"
-                  style={{ background: `${skill.color}14`, border: `1px solid ${skill.color}30` }}
-                >
-                  {skill.icon}
-                </div>
-                <h3
-                  className="font-mono font-bold text-sm"
-                  style={{ color: skill.color }}
-                >
-                  {skill.category}
-                </h3>
+              <div style={{ display: "flex", alignItems: "baseline", gap: "12px", marginBottom: "16px" }}>
+                <span className="mono" style={{ fontSize: "12px", color: "var(--red)", fontWeight: 600 }}>{skill.num}</span>
+                <h3 className="display" style={{ fontSize: "1.15rem" }}>{skill.category}</h3>
               </div>
-
-              {/* Items */}
-              <ul className="space-y-2">
+              <ul style={{ display: "flex", flexDirection: "column", gap: "9px" }}>
                 {skill.items.map((item) => (
-                  <li
-                    key={item}
-                    className="flex gap-2 text-xs leading-relaxed"
-                    style={{ color: "rgba(240,240,248,0.5)" }}
-                  >
-                    <span style={{ color: `${skill.color}80`, flexShrink: 0 }}>›</span>
+                  <li key={item} style={{ display: "flex", gap: "10px", fontSize: "13px", lineHeight: 1.5, color: "var(--ink-2)" }}>
+                    <span style={{ color: "var(--red)", flexShrink: 0 }}>—</span>
                     {item}
                   </li>
                 ))}
