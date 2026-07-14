@@ -64,11 +64,10 @@ export default function Hero() {
             style={{ gridTemplateColumns: "minmax(0,1.5fr) minmax(0,1fr)", alignItems: "end" }}
           >
             <p style={{ fontSize: "clamp(15px, 1.9vw, 18px)", lineHeight: 1.55, maxWidth: "46ch", color: "var(--ink)" }}>
-              I&apos;m Ramil — a systems builder. I build complete production
-              systems: distributed backends, AI pipelines, and the interfaces on
-              top, shipped in days, not months. Seventeen years ago I put a radio
-              station online. It&apos;s still running today, and I&apos;ve never had
-              to touch it.
+              I&apos;m Ramil — a systems builder. I take ideas to running
+              products: distributed backends, AI pipelines, and the interfaces on
+              top. Seventeen years in, I&apos;m shipping more than ever — fast, and
+              built to last.
             </p>
 
             <div

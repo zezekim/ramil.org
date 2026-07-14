@@ -200,6 +200,62 @@ body {
   display: inline-block;
 }
 
+/* ---------- Work index (Apple-minimal rows) ---------- */
+.work-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 28px;
+  align-items: center;
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: 0;
+  border-top: 1px solid var(--rule);
+  padding: clamp(26px, 3.5vw, 42px) 4px;
+  cursor: pointer;
+  transition: padding 0.25s ease, background 0.25s ease;
+}
+.work-main {
+  min-width: 0;
+}
+.work-head {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.work-title {
+  font-size: clamp(1.6rem, 3vw, 2.3rem);
+  line-height: 1.05;
+}
+.work-blurb {
+  display: block;
+  font-size: clamp(14px, 1.6vw, 16px);
+  line-height: 1.5;
+  color: var(--ink-2);
+  margin-top: 12px;
+  max-width: 54ch;
+}
+.work-arrow {
+  font-size: 22px;
+  color: var(--ink-3);
+  transition: transform 0.25s ease, color 0.25s ease;
+}
+.work-row:hover {
+  padding-left: 14px;
+  padding-right: 14px;
+  background: var(--paper-2);
+}
+.work-row:hover .work-arrow {
+  transform: translateX(6px);
+  color: var(--red);
+}
+@media (prefers-reduced-motion: reduce) {
+  .work-row:hover .work-arrow {
+    transform: none;
+  }
+}
+
 /* ---------- Reveal animation ---------- */
 .reveal {
   opacity: 0;

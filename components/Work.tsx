@@ -7,13 +7,11 @@ type Project = {
   status: "live" | "new";
   title: string;
   kind: string;
-  tagline: string;
+  blurb: string;
   description: string;
-  tags: string[];
   stats: { label: string; value: string }[];
   bullets: string[];
   tech: string[];
-  featured?: boolean;
 };
 
 const PROJECTS: Project[] = [
@@ -22,11 +20,9 @@ const PROJECTS: Project[] = [
     status: "live",
     title: "Seoul.fm",
     kind: "K-pop streaming platform",
-    tagline:
-      "17 years on air. A full K-pop streaming platform — multi-bitrate spatial-audio HLS, pitch-scored karaoke, real-time chat, Chromecast, and a native Android app.",
+    blurb: "A K-pop radio station rebuilt into a full streaming platform — 17 years live.",
     description:
       "A long-running K-pop internet radio station rebuilt into a full streaming platform: a Next.js web player on Cloudflare, a Flutter Android app, a self-hosted FFmpeg/CMAF encoder pipeline, a dual REST/SSE API, an edge HLS proxy, and a production chat service with AI-driven mood analysis. Listeners request and dedicate songs, follow now-playing over SSE, and sing along in a pitch-scored karaoke mode.",
-    tags: ["17 Years Live", "K-pop Streaming", "Multi-repo Platform"],
     stats: [
       { label: "Community", value: "300k+" },
       { label: "Years Live", value: "17" },
@@ -47,18 +43,15 @@ const PROJECTS: Project[] = [
       "Next.js 15", "Flutter", "Node.js/Express", "Python/FastAPI", "Flask",
       "MySQL", "Redis", "FFmpeg", "HLS/CMAF", "Cloudflare Workers", "BunnyCDN", "Google Cast SDK",
     ],
-    featured: true,
   },
   {
     id: "tofuvideo",
     status: "new",
     title: "tofuvideo",
     kind: "AI video production platform",
-    tagline:
-      "Type a topic, get a finished video — a distributed AI pipeline that scripts, illustrates, voices, captions and assembles a full MP4. Local-first, runs with zero API keys.",
+    blurb: "Type a topic, get a finished video — scripted, voiced, captioned and assembled.",
     description:
       "An AI video production platform. From a single topic (or a pasted script) it writes the script and scene breakdown, generates or sources each scene's visual, records a voiceover, times captions, produces avatar intro/outro, and assembles the final MP4 with FFmpeg. Every stage is a local-first provider chain that degrades gracefully, so the whole pipeline runs offline on free/local models — paid APIs (Claude, ElevenLabs, Replicate, HeyGen) are optional upgrades, not requirements.",
-    tags: ["AI Video", "Distributed Pipeline", "Local-first"],
     stats: [
       { label: "Pipeline Stages", value: "8" },
       { label: "Provider Chains", value: "9" },
@@ -73,18 +66,15 @@ const PROJECTS: Project[] = [
       "Local-only mode structurally blocks every paid provider — a real product that renders end-to-end for $0",
     ],
     tech: ["Python/FastAPI", "Next.js", "FFmpeg", "ComfyUI", "Kokoro", "Claude", "SQLite/Postgres"],
-    featured: true,
   },
   {
     id: "mxsentinel",
     status: "new",
     title: "MX Sentinel",
     kind: "Email-infra observability",
-    tagline:
-      "Datadog for email infrastructure — a 20-service Go mesh correlating SMTP telemetry, DNS auth state, and DMARC reports into AI root-cause diagnostics.",
+    blurb: "Datadog for email infrastructure — a 20-service Go mesh with AI diagnostics.",
     description:
       "An email-infrastructure observability and deliverability platform written in Go. It parses Postfix maillogs, continuously validates SPF/DKIM/DMARC/MX, ingests DMARC aggregate reports, and correlates the signals into operational incidents — then uses a local LLM to generate root-cause narratives and remediation steps. Multi-tenant, built for hosting providers and mail operators.",
-    tags: ["Go Service Mesh", "Email Security", "AI Diagnostics"],
     stats: [
       { label: "Go Services", value: "20" },
       { label: "REST Endpoints", value: "72" },
@@ -111,11 +101,9 @@ const PROJECTS: Project[] = [
     status: "live",
     title: "dmarcparser",
     kind: "DMARC suite + WHMCS module",
-    tagline:
-      "Turn raw DMARC aggregate XML into a live deliverability dashboard — a Go parser + viewer, plus a multi-tenant WHMCS client module.",
+    blurb: "Raw DMARC reports turned into a live, multi-tenant deliverability dashboard.",
     description:
       "A DMARC reporting suite. A parser service ingests aggregate XML reports (with an IMAP poller) and exposes a REST API with per-domain health and readiness scoring; a Go + Postgres web viewer renders reports and analytics; and 'Email Captain' — a WHMCS addon — turns it into a per-customer DMARC dashboard.",
-    tags: ["DMARC", "Go + Postgres", "WHMCS Module"],
     stats: [
       { label: "Deployment", value: "Live" },
       { label: "Backend", value: "Go + PG" },
@@ -137,11 +125,9 @@ const PROJECTS: Project[] = [
     status: "new",
     title: "AI CX System",
     kind: "RAG customer-experience layer",
-    tagline:
-      "A luxury retailer's entire customer-experience layer — RAG knowledge base, Ritz-Carlton-grade reply generation, and n8n orchestration.",
+    blurb: "A luxury retailer's entire customer-experience layer, grounded in RAG.",
     description:
       "An AI customer-experience system for a luxury retail brand. A ~130-chunk knowledge base — operations, sales guidance, CX writing rules, and emotional-intelligence reply standards — is embedded into a Supabase vector store and retrieved by an n8n RAG pipeline to draft replies in the brand's exact voice.",
-    tags: ["RAG", "Supabase pgvector", "n8n"],
     stats: [
       { label: "Knowledge Chunks", value: "~130" },
       { label: "Domain Loaders", value: "5" },
@@ -155,149 +141,6 @@ const PROJECTS: Project[] = [
       "Domain-split knowledge base keeps operational, sales, and tone guidance independently maintainable",
     ],
     tech: ["Supabase", "pgvector", "OpenAI Embeddings", "n8n", "Claude", "RAG", "Node.js"],
-  },
-  {
-    id: "inboxai",
-    status: "new",
-    title: "InboxAI",
-    kind: "Gmail triage + draft generation",
-    tagline:
-      "Every email read, classified hot/warm/cold, and drafted in the agent's voice — before they open Gmail.",
-    description:
-      "A Gmail triage and draft-generation system for a real-estate agent. An n8n workflow pulls unread mail every 5 minutes, Claude classifies each message and writes a draft reply in the agent's voice, everything persists to Supabase, an unsent Gmail draft is saved, and a Slack alert fires. A dashboard lets the agent review and approve before sending.",
-    tags: ["Gmail OAuth", "Claude", "n8n"],
-    stats: [
-      { label: "Categories", value: "5" },
-      { label: "Gmail Poll", value: "5 min" },
-      { label: "Urgency", value: "4 levels" },
-    ],
-    bullets: [
-      "5-category classification (lead, existing client, agent/colleague, listing, spam) with a 0–5 urgency score mapped to hot/warm/cold/skip",
-      "Claude (claude-sonnet-4-6) with Anthropic prompt caching on the system block; returns strict JSON with category, urgency, reasoning, and a drafted reply",
-      "n8n pipeline — Gmail trigger → normalize → Claude → Supabase → Gmail draft → Slack alert; the spam branch terminates with no draft",
-      "Supabase schema with emails/classifications/drafts tables and a triage_summary view the dashboard reads",
-      "Deployed as Vercel serverless functions plus a local Express server; a robust Gmail parser handles multiple API response shapes",
-    ],
-    tech: ["n8n", "Claude API", "Gmail OAuth", "Supabase", "Vercel", "Node.js", "Slack"],
-  },
-  {
-    id: "listinglaunch",
-    status: "new",
-    title: "ListingLaunch",
-    kind: "Real-estate marketing kit",
-    tagline:
-      "Paste a listing, get an HTML email, social captions, a PDF flyer, and a 9:16 Reels video in seconds — all in the agent's voice.",
-    description:
-      "A real-estate marketing-kit generator. Enter a property's address, price, and highlights and a Claude-backed route returns four outputs: an HTML email, platform-tuned social captions, a downloadable PDF flyer, and a 30-second 9:16 Remotion video — all written in the listing agent's brand voice.",
-    tags: ["Remotion", "Claude API", "Next.js"],
-    stats: [
-      { label: "Output Types", value: "4" },
-      { label: "Video Format", value: "9:16" },
-      { label: "Voice", value: "Brand-trained" },
-    ],
-    bullets: [
-      "One Claude (claude-sonnet-4-6) route returns a strict-JSON package: email, Instagram/LinkedIn/Facebook captions, PDF copy, and a video script",
-      "Per-platform caption constraints baked into the prompt (word and hashtag caps per network)",
-      "Brand voice centralized with explicit forbidden filler words ('stunning', 'breathtaking', 'don't miss out')",
-      "9:16 Reels video via Remotion with Ken Burns photo effects and background music, exported through the browser MediaRecorder",
-      "Client-side PDF flyer via jsPDF + html2canvas; Zod-typed inputs and outputs throughout",
-    ],
-    tech: ["Next.js 16", "React 19", "Claude API", "Remotion", "jsPDF", "Tailwind", "Zod"],
-  },
-  {
-    id: "zoomtranscribe",
-    status: "new",
-    title: "ZoomTranscribe",
-    kind: "Transcription + meeting notes",
-    tagline:
-      "Drop in a Zoom recording, get a time-synced transcript and AI meeting notes on a YouTube-style watch page.",
-    description:
-      "A self-hosted web app that ingests Zoom recordings, extracts audio with FFmpeg, transcribes via OpenAI Whisper, and presents a time-synced, clickable transcript plus AI-generated meeting insights. Runs as a single Docker container.",
-    tags: ["Whisper", "FastAPI", "Self-hosted"],
-    stats: [
-      { label: "Transcription", value: "Whisper" },
-      { label: "Cost", value: "~$0.36/hr" },
-      { label: "Exports", value: "3 formats" },
-    ],
-    bullets: [
-      "FFmpeg pipeline downmixes to mono 16 kHz, auto-splits recordings into 20-minute chunks (under the 25 MB API limit), then merges with offset-corrected timestamps",
-      "OpenAI Whisper (whisper-1) with segment-level timestamps; provider configurable via OPENAI_BASE_URL for self-hosted endpoints",
-      "GPT-4o-mini generates meeting insights — overview, key points, to-dos, and decisions",
-      "Optional speaker diarization via pyannote.audio + PyTorch",
-      "Exports VTT/SRT/TXT; WebVTT captions overlaid on a searchable, auto-highlighting transcript player",
-    ],
-    tech: ["Python/FastAPI", "OpenAI Whisper", "GPT-4o-mini", "FFmpeg", "SQLite", "pyannote.audio", "Docker"],
-  },
-  {
-    id: "plumbingbros",
-    status: "new",
-    title: "PlumbingBros AI Quote Builder",
-    kind: "Trade quoting tool",
-    tagline:
-      "Paste messy trade job notes, get a professional Australian quote — pricing, GST, and compliance — in seconds.",
-    description:
-      "A full-stack AI quote builder for an Australian plumbing/electrical trade business. A tradesperson pastes rough job notes and the app returns an itemized, customer-ready quote with local trade pricing, GST, compliance notes, and upsell suggestions — with the maths recomputed server-side rather than trusted to the model.",
-    tags: ["Claude Tools", "FastAPI", "Next.js"],
-    stats: [
-      { label: "GST", value: "10%" },
-      { label: "Standards", value: "AS/NZS" },
-      { label: "Output", value: "Branded PDF" },
-    ],
-    bullets: [
-      "Forced Claude tool call (build_quote) for guaranteed structured output, with the system prompt sent as a cache_control ephemeral block",
-      "Deterministic server-side maths — line totals, subtotal, 10% GST, and total recomputed rather than trusting the LLM",
-      "Editable pricing settings (labour rates, call-out fee, common items) persisted in localStorage and injected into the prompt as exact rates",
-      "System prompt encodes AS/NZS 3500 (plumbing) and AS/NZS 3000 (electrical) standards and refuses to invent facts",
-      "Branded A4 PDF quote export via @react-pdf/renderer",
-    ],
-    tech: ["Python/FastAPI", "Claude API", "Next.js 14", "React", "@react-pdf/renderer", "Tailwind"],
-  },
-  {
-    id: "help2move",
-    status: "new",
-    title: "Help2Move",
-    kind: "Lead-gen landing + quote form",
-    tagline:
-      "A conversion-focused Dutch moving-service landing page with a Google Places-powered, multi-step quote form.",
-    description:
-      "A Dutch-language marketing site and lead-gen tool for Help2Move, a transparent moving service. A multi-step 'offerte' (quote) form captures a move request with address autocomplete and live distance calculation, fronted by a conversion-oriented landing page.",
-    tags: ["Next.js", "Google Places", "Lead-gen"],
-    stats: [
-      { label: "Quote Form", value: "Multi-step" },
-      { label: "Address", value: "Places API" },
-      { label: "Distance", value: "Haversine" },
-    ],
-    bullets: [
-      "Multi-step quote form with per-step Zod validation via react-hook-form",
-      "Google Places autocomplete restricted to NL/BE/DE with a 280ms debounce, parsing structured address + lat/lng",
-      "Haversine distance calculation between pickup and drop-off, shown in the quote summary",
-      "Conversion-oriented landing sections — hero, trust bar, services, how-it-works, testimonials, CTA",
-      "Framer Motion animations with a tokenized brand design system",
-    ],
-    tech: ["Next.js 16", "React 19", "TypeScript", "Tailwind", "Framer Motion", "Google Maps API", "Zod"],
-  },
-  {
-    id: "testtools",
-    status: "new",
-    title: "Test Tools",
-    kind: "3-in-1 utility bundle",
-    tagline:
-      "Three tools, one app: AI email drafts from a CSV, a Telegram voice-note logger, and a live K-pop radio dashboard.",
-    description:
-      "A 3-in-1 Node/Express utility bundling a CSV-to-personalized-email generator, a Telegram voice-note logger with auto-summaries to Google Sheets, and a live Seoul.fm radio dashboard — with an in-browser settings tab to manage and test API keys.",
-    tags: ["Express", "OpenAI", "Telegram Bot"],
-    stats: [
-      { label: "Tools", value: "3" },
-      { label: "Integrations", value: "4" },
-      { label: "Refresh", value: "20s" },
-    ],
-    bullets: [
-      "CSV upload → per-contact personalized email via GPT-4o-mini with a mail-merge fallback; .eml export, capped at 50/run",
-      "Telegram bot (long-polling) transcribes voice notes via Whisper, summarizes via GPT, and appends to Google Sheets",
-      "Live radio dashboard proxying the Seoul.fm API server-side with TTL caching and 20s auto-refresh",
-      "In-browser settings with per-integration 'Test connection' and hot bot-restart on key change; graceful degradation when a key is missing",
-    ],
-    tech: ["Node.js", "Express", "OpenAI", "node-telegram-bot-api", "Google Sheets API"],
   },
 ];
 
@@ -323,7 +166,6 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
         style={{ background: "var(--paper)", border: "1px solid var(--ink-line)" }}
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Header */}
         <div
           className="sticky top-0 flex items-start justify-between gap-4 p-6 md:p-8"
           style={{ borderBottom: "2px solid var(--ink-line)", background: "var(--paper)" }}
@@ -338,7 +180,6 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
         </div>
 
         <div className="p-6 md:p-8" style={{ display: "flex", flexDirection: "column", gap: "28px" }}>
-          {/* Stats */}
           <div className="grid grid-cols-2 sm:grid-cols-4" style={{ borderTop: "1px solid var(--rule)" }}>
             {project.stats.map((s) => (
               <div key={s.label} style={{ padding: "14px 0", borderBottom: "1px solid var(--rule)", borderRight: "1px solid var(--rule)", paddingRight: "12px" }}>
@@ -376,46 +217,20 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
   );
 }
 
-function WorkRow({ project, index, onClick }: { project: Project; index: number; onClick: () => void }) {
+function WorkRow({ project, onClick }: { project: Project; onClick: () => void }) {
   return (
-    <button
-      onClick={onClick}
-      className="work-row"
-      style={{
-        display: "grid",
-        gridTemplateColumns: "46px minmax(0,1.5fr) minmax(0,2fr) auto",
-        gap: "24px",
-        alignItems: "baseline",
-        textAlign: "left",
-        width: "100%",
-        background: "transparent",
-        border: 0,
-        borderTop: "1px solid var(--rule)",
-        padding: "24px 0",
-        cursor: "pointer",
-      }}
-    >
-      <span className="mono tabnum" style={{ fontSize: "13px", fontWeight: 600, color: "var(--red)" }}>
-        {String(index + 1).padStart(2, "0")}
-      </span>
-      <span>
-        <span style={{ display: "flex", alignItems: "center", gap: "10px", flexWrap: "wrap" }}>
-          <span className="display" style={{ fontSize: "1.5rem", lineHeight: 1.1 }}>{project.title}</span>
-          {project.featured && (
-            <span className="mono" style={{ fontSize: "10px", letterSpacing: "0.06em", textTransform: "uppercase", color: "var(--red)", border: "1px solid var(--red)", padding: "2px 6px" }}>
-              Flagship
-            </span>
-          )}
+    <button onClick={onClick} className="work-row">
+      <span className="work-main">
+        <span className="work-head">
+          <span className="display work-title">{project.title}</span>
+          <span className={`status ${project.status}`}>
+            <span className="dot" />
+            {project.status === "live" ? "Live" : "New"}
+          </span>
         </span>
-        <span className="mono" style={{ display: "block", fontSize: "11px", letterSpacing: "0.04em", textTransform: "uppercase", color: "var(--ink-3)", marginTop: "6px" }}>
-          {project.kind}
-        </span>
+        <span className="work-blurb">{project.blurb}</span>
       </span>
-      <span style={{ fontSize: "14px", lineHeight: 1.5, color: "var(--ink-2)" }}>{project.tagline}</span>
-      <span className={`status ${project.status}`} style={{ justifySelf: "end" }}>
-        <span className="dot" />
-        {project.status === "live" ? "Live" : "New"}
-      </span>
+      <span aria-hidden className="work-arrow">→</span>
     </button>
   );
 }
@@ -424,47 +239,24 @@ export default function Work() {
   const [activeProject, setActiveProject] = useState<Project | null>(null);
 
   return (
-    <section id="work" style={{ padding: "80px 0" }}>
+    <section id="work" style={{ padding: "clamp(84px, 12vw, 140px) 0" }}>
       <div className="wrap">
-        <div className="flex items-baseline justify-between" style={{ marginBottom: "10px" }}>
-          <div>
-            <div className="eyebrow" style={{ marginBottom: "14px" }}>Selected Work</div>
-            <h2 className="display" style={{ fontSize: "clamp(2rem,4.5vw,3rem)" }}>None of these are demos.</h2>
-          </div>
-          <span className="mono" style={{ fontSize: "12px", color: "var(--ink-3)", whiteSpace: "nowrap" }}>
-            {PROJECTS.length} systems / 2009–2026
-          </span>
-        </div>
-
-        <p style={{ maxWidth: "52ch", fontSize: "14.5px", lineHeight: 1.6, color: "var(--ink-2)", marginBottom: "36px" }}>
-          Production platforms, client systems, and internal tools — every one shipped, and most still running. Open any row for the full technical detail.
+        <div className="eyebrow" style={{ marginBottom: "18px" }}>Selected Work</div>
+        <h2 className="display" style={{ fontSize: "clamp(2rem,5vw,3.2rem)", marginBottom: "20px" }}>
+          None of these are demos.
+        </h2>
+        <p style={{ maxWidth: "48ch", fontSize: "15px", lineHeight: 1.6, color: "var(--ink-2)", marginBottom: "clamp(32px, 5vw, 56px)" }}>
+          A selection — each one shipped and running. Open any for the full technical detail.
         </p>
 
         <div style={{ borderBottom: "1px solid var(--rule)" }}>
-          {PROJECTS.map((p, i) => (
-            <WorkRow key={p.id} project={p} index={i} onClick={() => setActiveProject(p)} />
+          {PROJECTS.map((p) => (
+            <WorkRow key={p.id} project={p} onClick={() => setActiveProject(p)} />
           ))}
         </div>
       </div>
 
       {activeProject && <ProjectModal project={activeProject} onClose={() => setActiveProject(null)} />}
-
-      <style jsx>{`
-        .work-row:hover {
-          padding-left: 10px !important;
-          padding-right: 10px !important;
-          background: var(--paper-2) !important;
-        }
-        @media (max-width: 760px) {
-          .work-row {
-            grid-template-columns: 34px 1fr auto !important;
-            gap: 8px 14px !important;
-          }
-          .work-row > :nth-child(3) {
-            grid-column: 2 / -1 !important;
-          }
-        }
-      `}</style>
     </section>
   );
 }
