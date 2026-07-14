@@ -86,6 +86,10 @@ export default function Hero() {
                 <span style={{ color: "var(--ink-3)" }}>Shipped</span>
                 <span style={{ color: "var(--ink)" }}>11 production systems</span>
               </div>
+              <div style={{ display: "flex", justifyContent: "space-between", borderBottom: "1px solid var(--rule)", padding: "3px 0" }}>
+                <span style={{ color: "var(--ink-3)" }}>Ops</span>
+                <span style={{ color: "var(--ink)" }}>8+ yrs Linux sysadmin</span>
+              </div>
               <div style={{ display: "flex", justifyContent: "space-between", padding: "3px 0" }}>
                 <span style={{ color: "var(--ink-3)" }}>Flagship</span>
                 <span style={{ color: "var(--ink)" }}>Seoul.fm — 17 yrs live</span>
