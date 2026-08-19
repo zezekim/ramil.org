@@ -1,39 +1,20 @@
 import type { Metadata } from "next";
-import { JetBrains_Mono, Archivo } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
-const archivo = Archivo({
-  subsets: ["latin"],
-  variable: "--font-sans",
-  weight: ["400", "500", "600", "700", "800", "900"],
-  display: "swap",
-});
-
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
-  variable: "--font-mono",
-  display: "swap",
-});
-
 export const metadata: Metadata = {
-  title: "Ramil Sususco — Systems builder · Ships in days, runs for years",
+  title: "Ramil Sususco — AI-Native Systems Architect",
   description:
-    "Systems builder, 17 years shipping. AI-native, I build complete production systems — distributed backends, AI pipelines, and the interfaces on top. Selected work: Seoul.fm, tofuvideo, MX Sentinel.",
-  keywords: ["systems builder", "distributed systems", "AI", "Go", "Next.js", "Python"],
+    "I build production systems that run without babysitting: infrastructure, internal platforms, data, automation, and AI.",
+  keywords: ["systems architect", "technical operations", "AI systems", "production systems", "FastAPI", "Go"],
   authors: [{ name: "Ramil Sususco" }],
   robots: {
-    index: false,
-    follow: false,
-    nocache: true,
-    googleBot: {
-      index: false,
-      follow: false,
-    },
+    index: true,
+    follow: true,
   },
   openGraph: {
-    title: "Ramil Sususco — Systems builder",
-    description: "Ships in days. Runs for years.",
+    title: "Ramil Sususco — AI-Native Systems Architect",
+    description: "I build systems that run without babysitting.",
     type: "website",
   },
 };
@@ -44,7 +25,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${archivo.variable} ${jetbrainsMono.variable}`}>
+    <html lang="en">
       <body>
         {children}
         <Analytics />

@@ -1,21 +1,19 @@
-import Nav from "@/components/Nav";
-import Hero from "@/components/Hero";
-import Work from "@/components/Work";
-import Process from "@/components/Process";
-import Skills from "@/components/Skills";
-import Contact from "@/components/Contact";
-import ScrollProgress from "@/components/ScrollProgress";
+import Link from "next/link";
+import SiteNav from "@/components/SiteNav";
+import SiteFooter from "@/components/SiteFooter";
+import SystemCard from "@/components/SystemCard";
+import { systems } from "@/lib/systems";
+
+const principles = ["Deterministic core, probabilistic edge.", "Business state belongs in proper software, not prompt memory.", "Use AI where reasoning adds value.", "Use automation where the workflow is deterministic.", "Humans approve consequential decisions.", "Make failures visible and recoverable.", "Keep systems boring where boring is safer.", "Do not add another SaaS tool unless it solves a real problem."];
+const range = [["Systems", "Linux, Docker, networking, hosting, monitoring, deployment"], ["Backend", "Python, FastAPI, Go, Node.js, TypeScript"], ["Data", "PostgreSQL, Redis, ClickHouse, pgvector, SQL"], ["AI", "LLM APIs, tool calling, RAG, structured outputs, agents, human-in-the-loop systems"], ["Operations", "Queues, retries, idempotency, auditability, observability, failure recovery"], ["Integration", "REST APIs, webhooks, Gmail, Google Workspace, payments, CRM, third-party SaaS"]];
 
 export default function Home() {
-  return (
-    <main className="min-h-screen">
-      <ScrollProgress />
-      <Nav />
-      <Hero />
-      <Work />
-      <Process />
-      <Skills />
-      <Contact />
-    </main>
-  );
+  return <><SiteNav /><main id="main-content">
+    <section className="hero shell"><div className="hero-copy"><p className="kicker">AI-native systems architect & technical operator</p><h1>I build systems that run without babysitting.</h1><p className="lede">I turn messy operational workflows into reliable software — across infrastructure, APIs, internal tools, data platforms, automation, and AI.</p><div className="hero-actions"><Link href="#systems" className="button button-primary">View systems <span aria-hidden="true">↓</span></Link><Link href="/about" className="button">About me <span aria-hidden="true">→</span></Link></div></div><aside className="hero-side" aria-label="Availability"><span className="live-dot" /> Manila · Remote<br />Available for select architecture / engineering work</aside></section>
+    <section className="section shell" id="systems"><div className="section-head"><div><p className="kicker">Selected systems</p><h2>Systems, not portfolio pieces.</h2></div><p>Each case study starts with the operational problem — then shows how the system was made reliable enough to own.</p></div><div className="systems-list">{systems.map(system => <SystemCard system={system} key={system.slug} />)}</div></section>
+    <section className="section shell work-section"><div className="section-head"><div><p className="kicker">How I work</p><h2>Understand → Model → Build → Operate</h2></div><p>The correct action should be the easiest action.</p></div><div className="process-grid">{[["01", "Understand", "Map the actual business process before writing code."], ["02", "Model", "Define authoritative data, workflows, failure states, and human responsibilities."], ["03", "Build", "Use the simplest appropriate tool: application code, automation, AI, or infrastructure."], ["04", "Operate", "Deploy, monitor, recover, document, and improve."]].map(([n, title, copy]) => <div className="process-step" key={n}><span>{n}</span><h3>{title}</h3><p>{copy}</p></div>)}</div><div className="principle-callout">AI should assist judgment, not replace authority where mistakes are expensive.</div></section>
+    <section className="section philosophy"><div className="shell"><div className="section-head"><div><p className="kicker">Architecture philosophy</p><h2>Practical by design.</h2></div><p>Good systems clarify what happens next — including when something fails.</p></div><div className="principles">{principles.map((principle, index) => <p key={principle}><span>{String(index + 1).padStart(2, "0")}</span>{principle}</p>)}</div></div></section>
+    <section className="section shell experience"><div className="experience-copy"><p className="kicker">Foundation</p><h2>I came to AI from production systems, not the other way around.</h2><p>I’ve spent 17+ years building and operating web and infrastructure systems: hosting, Linux, cPanel / WHM / WHMCS, migrations, and hundreds of production environments. That operational history shapes how I build AI-native platforms now.</p><Link className="text-link" href="/experience">View experience <span aria-hidden="true">→</span></Link></div><div className="stats"><div><strong>17+</strong><span>years building and operating systems</span></div><div><strong>100s</strong><span>websites and production environments</span></div><div><strong>Now</strong><span>AI and internal-platform work, grounded in operations</span></div></div></section>
+    <section className="section shell"><div className="section-head"><div><p className="kicker">Technical range</p><h2>Enough range to make good trade-offs.</h2></div><p>I work across the seams where most internal systems become difficult.</p></div><div className="range-matrix">{range.map(([title, items]) => <div key={title}><h3>{title}</h3><p>{items}</p></div>)}</div></section>
+  </main><SiteFooter /></>;
 }
