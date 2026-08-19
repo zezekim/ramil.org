@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Ramil Sususco — CV</title>
+  <style>
+    @page { size: Letter; margin: 0.55in 0.68in 0.38in; }
+    * { box-sizing: border-box; }
+    body { margin: 0; color: #1f2933; font-family: Arial, Helvetica, sans-serif; font-size: 9.2pt; line-height: 1.31; }
+    h1 { margin: 0; color: #172b4d; font-size: 23pt; letter-spacing: -0.03em; line-height: 1; }
+    .contact { margin-top: 5px; color: #425466; font-size: 8.7pt; }
+    .contact a { color: #005eb8; text-decoration: none; }
+    .rule { height: 2px; margin: 13px 0 10px; background: #172b4d; }
+    h2 { margin: 12px 0 4px; padding-bottom: 2px; color: #172b4d; border-bottom: 1px solid #9da9b8; font-size: 10.5pt; letter-spacing: .06em; text-transform: uppercase; }
+    h3 { margin: 7px 0 1px; color: #172b4d; font-size: 10pt; }
+    .role { display: flex; justify-content: space-between; gap: 20px; }
+    .role strong { font-weight: 700; }
+    .date { white-space: nowrap; color: #5f6c7b; font-weight: 400; }
+    p { margin: 3px 0 5px; }
+    ul { margin: 3px 0 6px 16px; padding: 0; }
+    li { margin: 1px 0; }
+    .summary { font-size: 10.2pt; line-height: 1.42; }
+    .systems { display: grid; grid-template-columns: 1fr 1fr; column-gap: 24px; }
+    .system { break-inside: avoid; }
+    .system h3 { margin-top: 7px; }
+    .label { color: #005eb8; font-weight: 700; }
+    .skills { display: grid; grid-template-columns: 108px 1fr; column-gap: 10px; row-gap: 3px; }
+    .skills b { color: #172b4d; }
+    .small { color: #425466; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Ramil Sususco</h1>
+    <div class="contact">AI-Native Systems Architect &amp; Technical Operator · Manila, Philippines · Remote · <a href="mailto:hello@ramil.org">hello@ramil.org</a> · <a href="https://ramil.org">ramil.org</a> · <a href="https://github.com/zezekim">github.com/zezekim</a></div>
+    <div class="rule"></div>
+  </header>
+
+  <section>
+    <h2>Profile</h2>
+    <p class="summary">Systems architect and technical operator with 17+ years building and running production web, infrastructure, backend, automation, data, and AI systems. I turn messy operational problems into clear workflows, choose the simplest reliable implementation, and stay accountable through deployment, monitoring, recovery, and improvement. I came to AI from production systems, not the other way around.</p>
+  </section>
+
+  <section>
+    <h2>Experience</h2>
+    <div class="role"><strong>Independent Systems Architect &amp; Technical Operator</strong><span class="date">2009–Present · Manila / Remote</span></div>
+    <ul>
+      <li>Design and operate internal platforms, event-driven services, AI workflows, infrastructure, and production web systems for operationally complex businesses.</li>
+      <li>Translate business processes into authoritative data models, explicit workflow states, human approval points, provider integrations, audit trails, and recoverable failure paths.</li>
+      <li>Build across Python, FastAPI, Go, TypeScript, Next.js, PostgreSQL, Redis, ClickHouse, queues, LLM APIs, RAG, agents, and observability systems.</li>
+      <li>17+ years of Linux, hosting, cPanel / WHM / WHMCS, DNS, email, migrations, deployment, incident response, and long-running production operations.</li>
+      <li>Use Claude Code and Codex as implementation leverage while retaining responsibility for architecture, requirements, review, testing, deployment, and operational outcomes.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Selected Systems</h2>
+    <div class="systems">
+      <div class="system">
+        <h3>MX Sentinel <span class="label">— AI email infrastructure observability</span></h3>
+        <p>Go-based event system correlating SMTP telemetry, DNS changes, DMARC data, reputation signals, and incidents. Combines deterministic evidence with AI-assisted diagnosis for mail operators.</p>
+        <p class="small"><b>Stack:</b> Go · PostgreSQL · ClickHouse · Redis · NATS · Next.js · Docker · observability</p>
+      </div>
+      <div class="system">
+        <h3>Northstar <span class="label">— AI-native business operations platform</span></h3>
+        <p>Sanitized production architecture connecting research, qualification, AI drafting, human review, campaigns, client workflows, payments, reporting, and role-based operations.</p>
+        <p class="small"><b>Stack:</b> FastAPI · Next.js · PostgreSQL / pgvector · agents · queues · audit trails</p>
+      </div>
+      <div class="system">
+        <h3>Tofu <span class="label">— AI video production engine</span></h3>
+        <p>AI editorial layer and deterministic rendering pipeline that turns scripts and topics into finished videos. AI plans; typed edit plans, workers, Remotion, and FFmpeg execute.</p>
+        <p class="small"><b>Stack:</b> FastAPI · worker architecture · Remotion · FFmpeg · provider fallbacks · asset cache</p>
+      </div>
+      <div class="system">
+        <h3>Seoul.fm <span class="label">— production streaming platform</span></h3>
+        <p>17-year live K-pop streaming platform with multi-bitrate HLS/CMAF, real-time APIs, mobile client, chat, encoding operations, and self-hosted monitoring.</p>
+        <p class="small"><b>Stack:</b> Next.js · Flutter · Node.js · Python · Redis · FFmpeg · Cloudflare · HLS</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Technical Range</h2>
+    <div class="skills">
+      <b>Systems</b><span>Linux, Docker, networking, hosting, monitoring, deployment, migrations</span>
+      <b>Backend</b><span>Python, FastAPI, Go, Node.js, TypeScript, REST APIs, async services</span>
+      <b>Data</b><span>PostgreSQL, Redis, ClickHouse, pgvector, SQL, event streams</span>
+      <b>AI</b><span>LLM APIs, tool calling, RAG, structured outputs, agents, human-in-the-loop workflows</span>
+      <b>Operations</b><span>Queues, retries, idempotency, auditability, observability, failure recovery, cost controls</span>
+      <b>Integration</b><span>Webhooks, Gmail, Google Workspace, payments, CRM, WHMCS, third-party SaaS</span>
+    </div>
+  </section>
+
+  <section>
+    <h2>Operating Principles</h2>
+    <p><span class="label">Deterministic core, probabilistic edge.</span> Business state belongs in proper software, not prompt memory. Use AI where reasoning adds value, automation where workflows are deterministic, and human approval where mistakes are expensive. Make failures visible and recoverable.</p>
+  </section>
+</body>
+</html>

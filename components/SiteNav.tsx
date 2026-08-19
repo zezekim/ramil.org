@@ -17,6 +17,7 @@ export default function SiteNav() {
         <Link href="/" className="wordmark">RAMIL<span>.</span></Link>
         <div className="nav-links">
           {links.map((link) => link.href.startsWith("#") ? <a key={link.label} href={link.href}>{link.label}</a> : <Link key={link.label} href={link.href}>{link.label}</Link>)}
+          <a href="/cv.pdf">CV <span aria-hidden="true">↓</span></a>
           <a href="https://github.com/zezekim" target="_blank" rel="noreferrer">GitHub <span aria-hidden="true">↗</span></a>
         </div>
       </nav>
