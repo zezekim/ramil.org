@@ -9,6 +9,9 @@ type Project = {
   kind: string;
   blurb: string;
   description: string;
+  image?: string;
+  imageAlt?: string;
+  link?: string;
   stats: { label: string; value: string }[];
   bullets: string[];
   tech: string[];
@@ -21,6 +24,9 @@ const PROJECTS: Project[] = [
     title: "Seoul.fm",
     kind: "K-pop streaming platform",
     blurb: "A K-pop radio station rebuilt into a full streaming platform — 17 years live.",
+    image: "/work/seoulfm.png",
+    imageAlt: "Seoul.fm web player — now playing, song requests, and live dedications",
+    link: "https://seoul.fm",
     description:
       "A long-running K-pop internet radio station rebuilt into a full streaming platform: a Next.js web player on Cloudflare, a Flutter Android app, a self-hosted FFmpeg/CMAF encoder pipeline, a dual REST/SSE API, an edge HLS proxy, and a production chat service with AI-driven mood analysis. Listeners request and dedicate songs, follow now-playing over SSE, and sing along in a pitch-scored karaoke mode.",
     stats: [
@@ -45,11 +51,14 @@ const PROJECTS: Project[] = [
     ],
   },
   {
-    id: "tofuvideo",
+    id: "vas",
     status: "new",
-    title: "tofuvideo",
+    title: "Video Automation Service (VAS)",
     kind: "AI video production platform",
     blurb: "Type a topic, get a finished video — scripted, voiced, captioned and assembled.",
+    image: "/work/tofuvideo.png",
+    imageAlt: "Video Automation Service (VAS) landing page — turn any topic into a finished video",
+    link: "https://tofu.video",
     description:
       "An AI video production platform. From a single topic (or a pasted script) it writes the script and scene breakdown, generates or sources each scene's visual, records a voiceover, times captions, produces avatar intro/outro, and assembles the final MP4 with FFmpeg. Every stage is a local-first provider chain that degrades gracefully, so the whole pipeline runs offline on free/local models — paid APIs (Claude, ElevenLabs, Replicate, HeyGen) are optional upgrades, not requirements.",
     stats: [
@@ -173,6 +182,17 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
           <div>
             <div className="eyebrow" style={{ marginBottom: "8px" }}>{project.kind}</div>
             <h2 className="display" style={{ fontSize: "2rem", lineHeight: 1 }}>{project.title}</h2>
+            {project.link && (
+              <a
+                href={project.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mono"
+                style={{ display: "inline-block", marginTop: "10px", fontSize: "12px", letterSpacing: "0.03em", color: "var(--red)" }}
+              >
+                {project.link.replace(/^https?:\/\//, "")} ↗
+              </a>
+            )}
           </div>
           <button onClick={onClose} aria-label="Close" className="p-2" style={{ color: "var(--ink-2)" }}>
             <X size={20} />
@@ -180,6 +200,27 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
         </div>
 
         <div className="p-6 md:p-8" style={{ display: "flex", flexDirection: "column", gap: "28px" }}>
+          {project.image && (
+            <figure
+              style={{
+                margin: 0,
+                borderRadius: "10px",
+                overflow: "hidden",
+                border: "1px solid var(--rule)",
+                background: "var(--paper-2)",
+                lineHeight: 0,
+              }}
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={project.image}
+                alt={project.imageAlt ?? `${project.title} screenshot`}
+                loading="lazy"
+                style={{ display: "block", width: "100%", height: "auto" }}
+              />
+            </figure>
+          )}
+
           <div className="grid grid-cols-2 sm:grid-cols-4" style={{ borderTop: "1px solid var(--rule)" }}>
             {project.stats.map((s) => (
               <div key={s.label} style={{ padding: "14px 0", borderBottom: "1px solid var(--rule)", borderRight: "1px solid var(--rule)", paddingRight: "12px" }}>

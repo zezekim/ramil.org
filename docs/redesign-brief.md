@@ -17,7 +17,7 @@ Near-black graphite ground, warm-white type, slate surfaces, and a single restra
 ```
 Nav
 Hero: thesis / concise context / two actions / availability
-Selected systems: MX Sentinel / Northstar / Tofu
+Selected systems: MX Sentinel / Northstar / Video Automation Service (VAS)
 How I work: Understand → Model → Build → Operate
 Architecture philosophy: practical operating rules
 Experience foundation + credibility figures
