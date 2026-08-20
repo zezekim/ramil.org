@@ -11,7 +11,7 @@ export default function SiteNav() {
   return (
     <>
       <a href="#main-content" className="skip-link">Skip to main content</a>
-      <div className="service-bar"><div className="shell">RAMIL.ORG <span>Independent systems architecture and technical operations</span></div></div>
+      <div className="service-bar"><div className="shell">RAMIL.ORG <span>Independent systems building and technical operations</span></div></div>
     <header className="site-header">
       <nav className="shell nav" aria-label="Main navigation">
         <Link href="/" className="wordmark">RAMIL<span>.</span></Link>

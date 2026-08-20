@@ -3,17 +3,17 @@ import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Ramil Sususco — AI-Native Systems Architect",
+  title: "Ramil Sususco — AI-Native Systems Builder",
   description:
     "I build production systems that run without babysitting: infrastructure, internal platforms, data, automation, and AI.",
-  keywords: ["systems architect", "technical operations", "AI systems", "production systems", "FastAPI", "Go"],
+  keywords: ["systems builder", "technical operations", "AI systems", "production systems", "FastAPI", "Go"],
   authors: [{ name: "Ramil Sususco" }],
   robots: {
     index: true,
     follow: true,
   },
   openGraph: {
-    title: "Ramil Sususco — AI-Native Systems Architect",
+    title: "Ramil Sususco — AI-Native Systems Builder",
     description: "I build systems that run without babysitting.",
     type: "website",
   },
