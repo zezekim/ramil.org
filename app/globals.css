@@ -56,6 +56,14 @@ a:hover { color: var(--blue-dark); }
 .section-head { display: grid; grid-template-columns: 1.2fr .8fr; gap: 55px; align-items: end; margin-bottom: 44px; }
 .section h2, .footer h2 { margin: 0; max-width: 780px; font-size: clamp(2rem, 4.2vw, 3.5rem); line-height: 1.03; letter-spacing: -.055em; }
 .section-head > p { margin: 0; color: var(--ink-soft); font-size: 16px; line-height: 1.55; }
+.demo-cta { padding-top: 110px; padding-bottom: 110px; }
+.demo-cta-inner { position: relative; overflow: hidden; padding: clamp(42px, 8vw, 100px) clamp(26px, 7vw, 92px); background: var(--ink); color: white; }
+.demo-cta-inner::after { content: "↗"; position: absolute; right: clamp(24px, 6vw, 78px); bottom: clamp(15px, 4vw, 48px); color: var(--yellow); font: 160px/1 var(--font-sans); letter-spacing: -.12em; opacity: .16; pointer-events: none; }
+.demo-cta .kicker { color: var(--yellow); }
+.demo-cta h2 { position: relative; z-index: 1; max-width: 850px; color: white; font-size: clamp(2.8rem, 7vw, 6.5rem); }
+.demo-cta p:not(.kicker) { position: relative; z-index: 1; max-width: 600px; margin: 28px 0 0; color: #d7e0ea; font-size: 19px; line-height: 1.55; }
+.demo-button { position: relative; z-index: 1; display: inline-flex; align-items: center; gap: 42px; min-height: 66px; margin-top: 42px; padding: 0 23px; background: var(--yellow); color: var(--ink); font-size: 16px; font-weight: 700; text-decoration: none; }
+.demo-button:hover { background: white; color: var(--ink); }
 .systems-list { border-top: 4px solid var(--ink); }
 .system-card { padding: 26px 0 29px; border-bottom: 1px solid var(--line-dark); }
 .system-card:hover { background: linear-gradient(90deg, var(--paper), #dceaf5, var(--paper)); }
