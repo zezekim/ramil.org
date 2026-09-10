@@ -8,8 +8,8 @@ export const dynamic = "force-dynamic";
 const FILE_PATH = path.join(process.cwd(), "assets", "cv-infra.pdf");
 const DOWNLOAD_NAME = "Ramil-Sususco-Infrastructure-CV.pdf";
 
-// Swap to "inline" if you would rather the PDF opened in the browser viewer.
-const DISPOSITION = "attachment";
+// Swap to "attachment" to force a save instead of a browser preview.
+const DISPOSITION = "inline";
 
 const BOT_UA =
   /bot|crawler|spider|crawl|slurp|preview|facebookexternalhit|whatsapp|telegram|discord|slack|twitter|linkedin|embedly|pinterest|headless|lighthouse|uptime|monitor|python-requests|axios|go-http-client|node-fetch/i;
@@ -70,7 +70,7 @@ async function notifyTelegram(request: NextRequest): Promise<void> {
   }).format(new Date());
 
   const lines = [
-    "CV downloaded: cv-infra.pdf",
+    "CV opened: cv-infra.pdf",
     "",
     `Time: ${time} (Manila)`,
     location ? `Location: ${location}` : null,
@@ -84,7 +84,7 @@ async function notifyTelegram(request: NextRequest): Promise<void> {
   try {
     // Plain text, no parse_mode: user agent strings would otherwise break
     // Markdown or HTML parsing and the message would be rejected.
-    await fetch(`${apiBase}/bot${token}/sendMessage`, {
+    const response = await fetch(`${apiBase}/bot${token}/sendMessage`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -94,6 +94,15 @@ async function notifyTelegram(request: NextRequest): Promise<void> {
       }),
       signal: AbortSignal.timeout(5000),
     });
+
+    // Telegram reports a bad token or chat id with a 4xx body, not a thrown
+    // error, so surface it rather than failing silently.
+    if (!response.ok) {
+      console.error(
+        `Telegram rejected the notification (${response.status}):`,
+        await response.text(),
+      );
+    }
   } catch (error) {
     // A failed notification must never break the download.
     console.error("Telegram notification failed:", error);
